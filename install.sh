@@ -104,8 +104,9 @@ echo -e "${YELLOW}sudo ufw allow 30001/tcp${NC}"
 echo -e "${YELLOW}sudo ufw allow 30002/tcp${NC}"
 echo -e "${YELLOW}sudo ufw allow 30003/tcp${NC}"
 
-echo -e "${YELLOW}Starting nkn node...${NC}"
-nohup ./nknd -p $WPASSWORD &
+echo -e "${YELLOW}Reboot for starting nkn node${NC}"
+echo -e "${YELLOW}or type nohup ./nknd -p $WPASSWORD & ${NC}"
+#nohup ./nknd -p $WPASSWORD &
 echo -e "${YELLOW}Use command ./nknc info --state for statistics${NC}"
 
 rm -rf nkn
