@@ -19,7 +19,7 @@ unzip $ARCHIVE
 mv $PATH/nkn* .
 rm -rf $PATH
 
-echo -n -e "${YELlOW}Your BeneficiaryAddr:${NC}"
+echo -n -e "${YELLOW}Your BeneficiaryAddr:${NC}"
 read -e ADDRESS
 echo
 cat << EOF > config.json
