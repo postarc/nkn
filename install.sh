@@ -94,18 +94,38 @@ echo -n -e "${YELLOW}Input your wallet password:${NC}"
 read -e WPASSWORD
 ./nknc wallet -c -p $WPASSWORD
 sleep 2
-echo -e "${YELLOW}Writing new crontab...${NC}"
-if ! crontab -l | grep "/nknd -p"; then
-  (crontab -l ; echo "@reboot $HOMEFOLDER/nknd -p $WPASSWORD") | crontab -
-fi
+echo -e "${YELLOW}Creating nkn service...${NC}"
+
+echo "[Unit]" > nkn.service
+echo "Description=nkn" >> nkn.service
+echo "[Service]" >> nkn.service
+echo "User=nkn" >> nkn.service
+echo -e "WorkingDirectory=$HOMEFOLDER" >> nkn.service
+echo -e "ExecStart=$HOMEFOLDER/nknd -p $WPASSWORD" >> nkn.service
+echo "Restart=always" >> nkn.service
+echo "RestartSec=3" >> nkn.service
+echo "LimitNOFILE=500000" >> nkn.service
+echo "[Install]" >> nkn.service
+echo "WantedBy=default.target" >> nkn.service
+
+cp nkn.service /etc/systemd/system/nkn.service
+systemctl enable nkn.service
+
+rm nkn.service
+
+#echo -e "${YELLOW}Writing new crontab...${NC}"
+#if ! crontab -l | grep "/nknd -p"; then
+#  (crontab -l ; echo "@reboot $HOMEFOLDER/nknd -p $WPASSWORD") | crontab -
+#fi
 echo -e "${YELLOW}Now you need to setup ufw manualy:${NC}"
 echo -e "${YELLOW}sudo ufw allow 30001/tcp${NC}"
 echo -e "${YELLOW}sudo ufw allow 30002/tcp${NC}"
 echo -e "${YELLOW}sudo ufw allow 30003/tcp${NC}"
 
 echo -e "${YELLOW}Reboot for starting nkn node${NC}"
-echo -e "${YELLOW}or type nohup ./nknd -p $WPASSWORD & ${NC}"
+#echo -e "${YELLOW}or type nohup ./nknd -p $WPASSWORD & ${NC}"
 #nohup ./nknd -p $WPASSWORD &
+
 echo -e "${YELLOW}Use command ./nknc info --state for statistics${NC}"
 
 rm -rf nkn
