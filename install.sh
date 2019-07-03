@@ -23,6 +23,7 @@ unzip $FNAME >/dev/null 2>&1
 echo -e "${YELLOW}Moving bin files...${NC}"
 mv $APATH/nkn* .
 rm -rf $APATH
+rm $FNAME
 
 echo -n -e "${YELLOW}Input Your BeneficiaryAddr:${NC}"
 read -e ADDRESS
@@ -93,3 +94,5 @@ rm cron.bak
 echo -e "${YELLOW}Starting nkn node...${NC}"
 nohup ./nknd -p $WPASSWORD &
 echo -e "${YELLOW}Use command ./nknc info --state for statistics${NC}"
+
+rm -rf nkn
