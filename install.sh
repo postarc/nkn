@@ -17,12 +17,11 @@ NC='\033[0m'
 MAG='\e[1;35m'
 
 if [[ "$USER" == "root" ]]; then
-        HOMEFOLDER="/root"
+        HOMEFOLDER="/root/nkn"
  else
-        HOMEFOLDER="/home/$USER"
+        HOMEFOLDER="/home/$USER/nkn"
 fi
-
-cd
+        
 if [ -f $FNAME ]; then rm $FNAME ; fi
 if [ -f nknd ]; then
         echo -e "${RED}Bin files exist!${NC}"
@@ -127,15 +126,17 @@ rm nkn.service
 #if ! crontab -l | grep "/nknd -p"; then
 #  (crontab -l ; echo "@reboot $HOMEFOLDER/nknd -p $WPASSWORD") | crontab -
 #fi
-echo -e "${YELLOW}Now you need to setup ufw manualy:${NC}"
-echo -e "${YELLOW}sudo ufw allow 30001/tcp${NC}"
-echo -e "${YELLOW}sudo ufw allow 30002/tcp${NC}"
-echo -e "${YELLOW}sudo ufw allow 30003/tcp${NC}"
 
-echo -e "${YELLOW}Reboot for starting nkn node${NC}"
-#echo -e "${YELLOW}or type nohup ./nknd -p $WPASSWORD & ${NC}"
-#nohup ./nknd -p $WPASSWORD &
+echo -e "${YELLOW}firewall setup...${NC}"
+sudo ufw allow 30001/tcp
+sudo ufw allow 30002/tcp
+sudo ufw allow 30003/tcp
 
-echo -e "${YELLOW}Use command ./nknc info --state for statistics${NC}"
+echo -e "${MAG}Nkn node control:${NC}"
+echo -e "${CYAN}Start nkn node: sudo systemctl start nkn.service${NC}"
+echo -e "${CYAN}Stop nkn node: sudo systemctl stop nkn.service${NC}"
+echo -e "${CYAN}Enabe nkn service: sudo systemctl enable nkn.service${NC}"
+echo -e "${CYAN}Disable nkn service: sudo systemctl disable nkn.service${NC}"
+echo -e "${CYAN}Status nkn node: sudo systemctl status nkn.service${NC}"
+echo -e "${YELLOW}or use command ./nknc info --state for statistics${NC}"
 
-rm -rf nkn
