@@ -14,7 +14,7 @@ GREEN="\033[0;32m"
 NC='\033[0m'
 MAG='\e[1;35m'
 
-cd ~
+cd
 wget -q $ARCHIVE
 unzip $FNAME >/dev/null 2>&1
 mv $PATH/nkn* .
