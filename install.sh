@@ -118,8 +118,8 @@ echo "LimitNOFILE=500000" >> nkn.service
 echo "[Install]" >> nkn.service
 echo "WantedBy=default.target" >> nkn.service
 
-cp nkn.service /etc/systemd/system/nkn.service
-systemctl enable nkn.service
+sudo cp nkn.service /etc/systemd/system/nkn.service
+sudo systemctl enable nkn.service
 
 rm nkn.service
 
