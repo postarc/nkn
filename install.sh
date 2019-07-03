@@ -141,3 +141,4 @@ echo -e "${CYAN}Status nkn node: ${PURPLE}sudo systemctl status nkn.service${NC}
 echo -e "${YELLOW}or use command ./nknc info --state for statistics${NC}"
 
 rm install.sh
+cd ~
