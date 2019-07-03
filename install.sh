@@ -79,20 +79,17 @@ cat << EOF > config.json
   "GenesisBlockProposer": "a0309f8280ca86687a30ca86556113a253762e40eb884fc6063cad2b1ebd7de5"
 }
 EOF
-echo -e "${GREEN}Writing config file done!${NC}"
 sleep 2
 echo -e "${YELLOW}Create new wallet...${NC}"
 echo -n -e "${YELLOW}Input your wallet password:${NC}"
 read -e WPASSWORD
 ./nknc wallet -c -p $WPASSWORD
 sleep 2
-echo -e "${GREEN}New wallet created!${NC}"
 echo -e "${YELLOW}Writing new crontab...${NC}"
 crontab -l > cron.bak
 echo -e "@reboot /home/nkn/nknd -p $WPASSWORD" >> cron.bak
 crontab cron.bak
 rm cron.bak
-echo -e "${GREEN}New crontab writed!${NC}"
 echo -e "${YELLOW}Starting nkn node...${NC}"
 nohup ./nknd -p $WPASSWORD &
-echo -e "${GREEN}All done!${NC}"
+echo -e "${YELLOW}Use command ./nknc info --state for statistics${NC}"
