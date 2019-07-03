@@ -95,6 +95,8 @@ EOF
 sleep 2
 if [ -f $FWALLET ] ; then
         echo -e "${RED}Wallet already exist!${NC}"
+        echo -n -e "${YELLOW}Input your wallet password:${NC}"
+        read -e WPASSWORD        
         else
         echo -e "${YELLOW}Create new wallet...${NC}"
         echo -n -e "${YELLOW}Input your wallet password:${NC}"
