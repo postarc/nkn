@@ -21,7 +21,7 @@ if [[ "$USER" == "root" ]]; then
  else
         HOMEFOLDER="/home/$USER/nkn"
 fi
-        
+cd $HOMEFOLDER       
 if [ -f $FNAME ]; then rm $FNAME ; fi
 if [ -f nknd ]; then
         echo -e "${RED}Bin files exist!${NC}"
@@ -133,11 +133,11 @@ sudo ufw allow 30002/tcp
 sudo ufw allow 30003/tcp
 
 echo -e "${MAG}Nkn node control:${NC}"
-echo -e "${CYAN}Start nkn node: sudo systemctl start nkn.service${NC}"
-echo -e "${CYAN}Stop nkn node: sudo systemctl stop nkn.service${NC}"
-echo -e "${CYAN}Enabe nkn service: sudo systemctl enable nkn.service${NC}"
-echo -e "${CYAN}Disable nkn service: sudo systemctl disable nkn.service${NC}"
-echo -e "${CYAN}Status nkn node: sudo systemctl status nkn.service${NC}"
+echo -e "${CYAN}Start nkn node: ${PURPLE}sudo systemctl start nkn.service${NC}"
+echo -e "${CYAN}Stop nkn node: ${PURPLE}sudo systemctl stop nkn.service${NC}"
+echo -e "${CYAN}Enabe nkn service: ${PURPLE}sudo systemctl enable nkn.service${NC}"
+echo -e "${CYAN}Disable nkn service: ${PURPLE}sudo systemctl disable nkn.service${NC}"
+echo -e "${CYAN}Status nkn node: ${PURPLE}sudo systemctl status nkn.service${NC}"
 echo -e "${YELLOW}or use command ./nknc info --state for statistics${NC}"
 
 rm install.sh
