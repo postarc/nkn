@@ -9,7 +9,7 @@ FWALLET="wallet.json"
 #color
 BLUE="\033[0;34m"
 YELLOW="\033[0;33m"
-CYAN="\033[0;36m" 
+CYAN="\033[0;36m"
 PURPLE="\033[0;35m"
 RED='\033[0;31m'
 GREEN="\033[0;32m"
@@ -24,7 +24,9 @@ fi
 
 cd
 if [ -f $FNAME ]; then rm $FNAME ; fi
-if [ !(-f nknd) ]; then
+if [ -f nknd ]; then
+        echo -e "${RED}Bin files exist!${NC}"
+        else
         echo -e "${YELLOW}Downloading bin files...${NC}"
         wget $ARCHIVE
         echo -e "${YELLOW}Unzipping bin files...${NC}"
@@ -33,7 +35,7 @@ if [ !(-f nknd) ]; then
         mv $APATH/nkn* .
         rm -rf $APATH
         rm $FNAME ; fi
-        
+
 echo -n -e "${YELLOW}Input Your BeneficiaryAddr:${NC}"
 read -e ADDRESS
 echo
@@ -91,13 +93,14 @@ cat << EOF > $FCONFIG
 }
 EOF
 sleep 2
-if [ !(-f $FWALLET) ];then
+if [ -f $FWALLET ] ; then
+        echo -e "${RED}Wallet already exist!${NC}"
+        else
         echo -e "${YELLOW}Create new wallet...${NC}"
         echo -n -e "${YELLOW}Input your wallet password:${NC}"
         read -e WPASSWORD
         ./nknc wallet -c -p $WPASSWORD
-    else
-        echo -e "${RED}Wallet already exist!${NC}" ; fi
+        fi
 sleep 2
 echo -e "${YELLOW}Creating nkn service...${NC}"
 
