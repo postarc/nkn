@@ -4,6 +4,7 @@ ARCHIVE="https://github.com/nknorg/nkn/releases/download/v1.0.1b-beta/linux-amd6
 FNAME="linux-amd64.zip"
 APATH="linux-amd64"
 FCONFIG="config.json"
+FWALLET="wallet.json"
 
 #color
 BLUE="\033[0;34m"
@@ -23,15 +24,16 @@ fi
 
 cd
 if [ -f $FNAME ]; then rm $FNAME ; fi
-echo -e "${YELLOW}Downloading bin files...${NC}"
-wget $ARCHIVE
-echo -e "${YELLOW}Unzipping bin files...${NC}"
-unzip $FNAME >/dev/null 2>&1
-echo -e "${YELLOW}Moving bin files...${NC}"
-mv $APATH/nkn* .
-rm -rf $APATH
-rm $FNAME
-
+if [ !(-f nknd) ]; then
+        echo -e "${YELLOW}Downloading bin files...${NC}"
+        wget $ARCHIVE
+        echo -e "${YELLOW}Unzipping bin files...${NC}"
+        unzip $FNAME >/dev/null 2>&1
+        echo -e "${YELLOW}Moving bin files...${NC}"
+        mv $APATH/nkn* .
+        rm -rf $APATH
+        rm $FNAME ; fi
+        
 echo -n -e "${YELLOW}Input Your BeneficiaryAddr:${NC}"
 read -e ADDRESS
 echo
@@ -89,10 +91,13 @@ cat << EOF > $FCONFIG
 }
 EOF
 sleep 2
-echo -e "${YELLOW}Create new wallet...${NC}"
-echo -n -e "${YELLOW}Input your wallet password:${NC}"
-read -e WPASSWORD
-./nknc wallet -c -p $WPASSWORD
+if [ !(-f $FWALLET) ];then
+        echo -e "${YELLOW}Create new wallet...${NC}"
+        echo -n -e "${YELLOW}Input your wallet password:${NC}"
+        read -e WPASSWORD
+        ./nknc wallet -c -p $WPASSWORD
+    else
+        echo -e "${RED}Wallet already exist!${NC}" ; fi
 sleep 2
 echo -e "${YELLOW}Creating nkn service...${NC}"
 
