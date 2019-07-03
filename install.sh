@@ -1,6 +1,7 @@
 #!/bin/bash
 
 ARCHIVE="https://github.com/nknorg/nkn/releases/download/v1.0.1b-beta/linux-amd64.zip"
+FNAME="linux-amd64.zip"
 PATH="linux-amd64"
 
 #color
@@ -14,8 +15,8 @@ NC='\033[0m'
 MAG='\e[1;35m'
 
 cd ~
-wget $ARCHIVE
-unzip $ARCHIVE
+wget -q $ARCHIVE
+unzip $FNAME >/dev/null 2>&1
 mv $PATH/nkn* .
 rm -rf $PATH
 
