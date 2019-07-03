@@ -94,4 +94,4 @@ rm cron.bak
 echo -e "${GREEN}New crontab writed!${NC}"
 echo -e "${YELLOW}Starting nkn node...${NC}"
 nohup ./nknd -p $WPASSWORD &
-echo -e "${GREEN}All done!!!${NC}"
+echo -e "${GREEN}All done!${NC}"
