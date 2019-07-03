@@ -99,10 +99,10 @@ crontab -l > cron.bak
 echo -e "@reboot $HOMEFOLDER/nknd -p $WPASSWORD" >> cron.bak
 crontab cron.bak
 rm cron.bak
-echo -e "${YELLOW}Setup ufw...${NC}"
-sudo ufw allow 30001/tcp
-sudo ufw allow 30002/tcp
-sudo ufw allow 30003/tcp
+echo -e "${YELLOW}Now you need to setup ufw manualy:${NC}"
+echo -e "${YELLOW}sudo ufw allow 30001/tcp${NC}"
+echo -e "${YELLOW}sudo ufw allow 30002/tcp${NC}"
+echo -e "${YELLOW}sudo ufw allow 30003/tcp${NC}"
 
 echo -e "${YELLOW}Starting nkn node...${NC}"
 nohup ./nknd -p $WPASSWORD &
