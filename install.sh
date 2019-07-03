@@ -95,10 +95,9 @@ read -e WPASSWORD
 ./nknc wallet -c -p $WPASSWORD
 sleep 2
 echo -e "${YELLOW}Writing new crontab...${NC}"
-crontab -l > cron.bak
-echo -e "@reboot $HOMEFOLDER/nknd -p $WPASSWORD" >> cron.bak
-crontab cron.bak
-rm cron.bak
+if ! crontab -l | grep "/nknd -p"; then
+  (crontab -l ; echo "@reboot $HOMEFOLDER/nknd -p $WPASSWORD") | crontab -
+fi
 echo -e "${YELLOW}Now you need to setup ufw manualy:${NC}"
 echo -e "${YELLOW}sudo ufw allow 30001/tcp${NC}"
 echo -e "${YELLOW}sudo ufw allow 30002/tcp${NC}"
