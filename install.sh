@@ -36,7 +36,7 @@ echo -n -e "${YELLOW}Input Your BeneficiaryAddr:${NC}"
 read -e ADDRESS
 echo
 if [ -f $FCONFIG ]; then rm $FCONFIG ; fi
-cat << EOF > $CONFIG
+cat << EOF > $FCONFIG
 {
   "BeneficiaryAddr": "$ADDRESS",
   "SeedList": [
