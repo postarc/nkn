@@ -14,6 +14,12 @@ GREEN="\033[0;32m"
 NC='\033[0m'
 MAG='\e[1;35m'
 
+if [[ "$USER" == "root" ]]; then
+        HOMEFOLDER="/root"
+ else
+        HOMEFOLDER="/home/$USER"
+fi
+
 cd
 if [ -f $FNAME ]; then rm $FNAME ; fi
 echo -e "${YELLOW}Downloading bin files...${NC}"
@@ -88,9 +94,14 @@ read -e WPASSWORD
 sleep 2
 echo -e "${YELLOW}Writing new crontab...${NC}"
 crontab -l > cron.bak
-echo -e "@reboot /home/nkn/nknd -p $WPASSWORD" >> cron.bak
+echo -e "@reboot $HOMEFOLDER/nknd -p $WPASSWORD" >> cron.bak
 crontab cron.bak
 rm cron.bak
+echo -e "${YELLOW}Setup ufw...${NC}"
+sudo ufw allow 30001/tcp
+sudo ufw allow 30002/tcp
+sudo ufw allow 30003/tcp
+
 echo -e "${YELLOW}Starting nkn node...${NC}"
 nohup ./nknd -p $WPASSWORD &
 echo -e "${YELLOW}Use command ./nknc info --state for statistics${NC}"
