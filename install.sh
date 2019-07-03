@@ -140,6 +140,8 @@ echo -e "${CYAN}Enabe nkn service: ${BLUE}sudo systemctl enable nkn.service${NC}
 echo -e "${CYAN}Disable nkn service: ${BLUE}sudo systemctl disable nkn.service${NC}"
 echo -e "${CYAN}Status nkn node: ${BLUE}sudo systemctl status nkn.service${NC}"
 echo -e "${YELLOW}or use command ./nknc info --state for statistics${NC}"
+echo -e "${CYAN}For nkn.service file editing: ${BLUE}sudo nano /etc/systemd/system/nkn.service${NC}"
+echo -e "${CYAN}After editing nkn.service file: ${BLUE}sudo systemctl daemon-reload${NC}"
 
 cd $CURRENTDIR
 rm -rf nkn
