@@ -16,7 +16,7 @@ MAG='\e[1;35m'
 
 cd
 echo -e "${YELLOW}Downloading bin files...${NC}"
-wget -q $ARCHIVE
+wget $ARCHIVE
 echo -e "${YELLOW}Unzipping bin files...${NC}"
 unzip $FNAME >/dev/null 2>&1
 echo -e "${YELLOW}Moving bin files...${NC}"
