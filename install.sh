@@ -2,7 +2,7 @@
 
 ARCHIVE="https://github.com/nknorg/nkn/releases/download/v1.0.1b-beta/linux-amd64.zip"
 FNAME="linux-amd64.zip"
-PATH="linux-amd64"
+APATH="linux-amd64"
 
 #color
 BLUE="\033[0;34m"
@@ -15,12 +15,15 @@ NC='\033[0m'
 MAG='\e[1;35m'
 
 cd
+echo -e "${YELLOW}Downloading bin files..."${NC}"
 wget -q $ARCHIVE
+echo -e "${YELLOW}Unzipping bin files...${NC}"
 unzip $FNAME >/dev/null 2>&1
-mv $PATH/nkn* .
-rm -rf $PATH
+echo -e "${YELLOW}Moving bin files...${NC}"
+mv $APATH/nkn* .
+rm -rf $APATH
 
-echo -n -e "${YELLOW}Your BeneficiaryAddr:${NC}"
+echo -n -e "${YELLOW}Input Your BeneficiaryAddr:${NC}"
 read -e ADDRESS
 echo
 cat << EOF > config.json
