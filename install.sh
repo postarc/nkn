@@ -3,6 +3,7 @@
 ARCHIVE="https://github.com/nknorg/nkn/releases/download/v1.0.1b-beta/linux-amd64.zip"
 FNAME="linux-amd64.zip"
 APATH="linux-amd64"
+FCONFIG="config.json"
 
 #color
 BLUE="\033[0;34m"
@@ -34,7 +35,8 @@ rm $FNAME
 echo -n -e "${YELLOW}Input Your BeneficiaryAddr:${NC}"
 read -e ADDRESS
 echo
-cat << EOF > config.json
+if [ -f $FCONFIG ]; then rm $FCONFIG ; fi
+cat << EOF > $CONFIG
 {
   "BeneficiaryAddr": "$ADDRESS",
   "SeedList": [
