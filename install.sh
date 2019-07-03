@@ -15,6 +15,7 @@ NC='\033[0m'
 MAG='\e[1;35m'
 
 cd
+if [ -f $FNAME ]; then rm $FNAME ; fi
 echo -e "${YELLOW}Downloading bin files...${NC}"
 wget $ARCHIVE
 echo -e "${YELLOW}Unzipping bin files...${NC}"
