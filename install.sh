@@ -17,10 +17,11 @@ NC='\033[0m'
 MAG='\e[1;35m'
 
 if [[ "$USER" == "root" ]]; then
-        HOMEFOLDER="/root/nkn"
+        HOMEFOLDER="/root/nkn-node"
  else
-        HOMEFOLDER="/home/$USER/nkn"
+        HOMEFOLDER="/home/$USER/nkn-node"
 fi
+CURRENTDIR=$(pwd)
 cd $HOMEFOLDER       
 if [ -f $FNAME ]; then rm $FNAME ; fi
 if [ -f nknd ]; then
@@ -140,5 +141,6 @@ echo -e "${CYAN}Disable nkn service: ${PURPLE}sudo systemctl disable nkn.service
 echo -e "${CYAN}Status nkn node: ${PURPLE}sudo systemctl status nkn.service${NC}"
 echo -e "${YELLOW}or use command ./nknc info --state for statistics${NC}"
 
-rm install.sh
-cd ~
+cd $CURRENTDIR
+rm -rf nkn
+
