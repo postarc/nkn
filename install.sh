@@ -22,7 +22,7 @@ if [[ "$USER" == "root" ]]; then
         HOMEFOLDER="/home/$USER/nkn-node"
 fi
 CURRENTDIR=$(pwd)
-cd $HOMEFOLDER       
+if [ -d $HOMEFOLDER ] ; then cd $HOMEFOLDER ; else mkdir $HOMEFOLDER; cd $HOMEFOLDER; fi
 if [ -f $FNAME ]; then rm $FNAME ; fi
 if [ -f nknd ]; then
         echo -e "${RED}Bin files exist!${NC}"
