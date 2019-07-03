@@ -140,3 +140,4 @@ echo -e "${CYAN}Disable nkn service: sudo systemctl disable nkn.service${NC}"
 echo -e "${CYAN}Status nkn node: sudo systemctl status nkn.service${NC}"
 echo -e "${YELLOW}or use command ./nknc info --state for statistics${NC}"
 
+rm install.sh
