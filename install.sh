@@ -16,6 +16,8 @@ GREEN="\033[0;32m"
 NC='\033[0m'
 MAG='\e[1;35m'
 
+sudo apt-get install unzip -y 
+
 if [[ "$USER" == "root" ]]; then
         HOMEFOLDER="/root/nkn-node"
  else
