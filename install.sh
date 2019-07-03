@@ -19,7 +19,9 @@ MAG='\e[1;35m'
 sudo apt-get install unzip -y 
 
 if [[ "$USER" == "root" ]]; then
-        HOMEFOLDER="/root/nkn-node"
+#        HOMEFOLDER="/root/nkn-node"
+        echo -e "${RED}Do not install node in the root folder, please create new user${NC}"
+        exit 0
  else
         HOMEFOLDER="/home/$USER/nkn-node"
 fi
