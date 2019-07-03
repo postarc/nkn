@@ -14,6 +14,7 @@ NC='\033[0m'
 MAG='\e[1;35m'
 
 cd ~
+wget $ARCHIVE
 unzip $ARCHIVE
 mv $PATH/nkn* .
 rm -rf $PATH
