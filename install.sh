@@ -113,7 +113,7 @@ echo -e "${YELLOW}Creating nkn service...${NC}"
 echo "[Unit]" > nkn.service
 echo "Description=nkn" >> nkn.service
 echo "[Service]" >> nkn.service
-echo "User=nkn" >> nkn.service
+echo -e "User=$USER" >> nkn.service
 echo -e "WorkingDirectory=$HOMEFOLDER" >> nkn.service
 echo -e "ExecStart=$HOMEFOLDER/nknd -p $WPASSWORD" >> nkn.service
 echo "Restart=always" >> nkn.service
