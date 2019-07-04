@@ -17,9 +17,9 @@ NC='\033[0m'
 MAG='\e[1;35m'
 
 if [[ "$USER" == "root" ]]; then
-#        HOMEFOLDER="/root/nkn-node"
-        echo -e "${RED}Do not install node in the root folder, please create new user${NC}"
-        exit 0
+        HOMEFOLDER="/root/nkn-node"
+#       echo -e "${RED}Do not install node in the root folder, please create new user${NC}"
+#        exit 0
  else
         HOMEFOLDER="/home/$USER/nkn-node"
 fi
