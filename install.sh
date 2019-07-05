@@ -137,6 +137,9 @@ sudo ufw allow 30001/tcp
 sudo ufw allow 30002/tcp
 sudo ufw allow 30003/tcp
 
+echo -e "${GREEN}Starting nkn service...${NC}"
+sudo systemctl start nkn.service
+
 echo -e "${MAG}Nkn node control:${NC}"
 echo -e "${CYAN}Start nkn node: ${BLUE}sudo systemctl start nkn.service${NC}"
 echo -e "${CYAN}Stop nkn node: ${BLUE}sudo systemctl stop nkn.service${NC}"
