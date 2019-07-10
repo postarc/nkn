@@ -37,7 +37,8 @@ echo -e "chown -R $USER:$USER $HOMEFOLDER/nkn" >> $SCRIPT_NAME
 echo 'LATEST_TAG=$(git tag --sort=-creatordate | head -1)' >> $SCRIPT_NAME
 echo 'cd ..' >> $SCRIPT_NAME
 echo -n 'if [[ -z $' >> $SCRIPT_NAME
-echo -e "($HOMEFOLDER/nknd -v | grep $LATEST_TAG) ]]; then" >> $SCRIPT_NAME
+echo -n -e "($HOMEFOLDER/nknd -v | grep " >> $SCRIPT_NAME
+echo '$LATEST_TAG) ]]; then' >> $SCRIPT_NAME
 echo -e "  sudo -u $USER systemctl stop nkn.service" >> $SCRIPT_NAME
 echo '  if [ -f $DIR_NAME.zip ]; then rm $DIR_NAME.zip; fi' >> $SCRIPT_NAME
 echo '  wget "$RELEASES_PATH/$LATEST_TAG/$DIR_NAME.zip"' >> $SCRIPT_NAME
