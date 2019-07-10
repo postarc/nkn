@@ -9,6 +9,7 @@ if [[ "$USER" == "root" ]]; then
 fi
 
 CURRENTDIR=$(pwd)
+cd $HOMEFOLDER
 
 if [[ -z $(sudo -u root crontab -l | grep '/nknupdate.sh') ]]; then
         sudo -u root crontab -l > cron
