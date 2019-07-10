@@ -23,7 +23,7 @@ echo "#!/bin/bash" > $SCRIPT_NAME
 echo >> $SCRIPT_NAME
 echo 'GITPATH="https://github.com/nknorg/nkn.git"' >> $SCRIPT_NAME
 echo 'RELEASES_PATH="https://github.com/nknorg/nkn/releases/download"' >> $SCRIPT_NAME
-echo 'DIR_NAME="linux-amd64"'
+echo 'DIR_NAME="linux-amd64"' >> $SCRIPT_NAME
 echo 'CURRENTDIR=$(pwd)' >> $SCRIPT_NAME
 echo -e "cd $HOMEFOLDER" >> $SCRIPT_NAME
 echo 'if [ -d nkn ]; then' >> $SCRIPT_NAME
