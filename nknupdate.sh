@@ -24,12 +24,12 @@ LATEST_TAG=$(git tag --sort=-creatordate | head -1)
 cd ..
 
 if [[ -n $(./nknd -v | grep $LATEST_TAG) ]]; then 
-  sudo systemctl stop nkn.service
+  sudo -u nkn systemctl stop nkn.service
   wget "$RELEASES_PATH/$LATEST_TAG/$DIR_NAME.zip"
   unzip "$DIR_NAME.zip"
   chmod +x $DIR_NAME/nkn*
   mv $DIR_NAME/nkn* .
-  sudo systemctl start nkn.service
+  sudo -u nkn systemctl start nkn.service
   rm -rf $DIR_NAME $DIR_NAME.zip
 fi
 cd $CURRENTDIR
