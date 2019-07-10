@@ -162,5 +162,6 @@ echo -e "${CYAN}For nkn.service file editing: ${BLUE}sudo nano /etc/systemd/syst
 echo -e "${CYAN}After editing nkn.service file: ${BLUE}sudo systemctl daemon-reload${NC}"
 
 cd $CURRENTDIR
+bash nkn/autoupdate.sh
 rm -rf nkn
 
