@@ -17,6 +17,7 @@ if [[ -z $(sudo -u root crontab -l | grep 'nknupdate.sh') ]]; then
         sudo -u root crontab cron
         rm cron
 fi
+echo "Create script file..."
 
 echo "#!/bin/bash" > $SCRIPT_NAME
 echo 'GITPATH="https://github.com/nknorg/nkn.git"' >> $SCRIPT_NAME
