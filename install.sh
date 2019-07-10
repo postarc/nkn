@@ -1,8 +1,8 @@
 #!/bin/bash
 
-ARCHIVE="https://github.com/nknorg/nkn/releases/download/v1.0.2-beta/linux-amd64.zip"
-FNAME="linux-amd64.zip"
-APATH="linux-amd64"
+GITPATH="https://github.com/nknorg/nkn.git"
+RELEASES_PATH="https://github.com/nknorg/nkn/releases/download"
+DIR_NAME="linux-amd64"
 FCONFIG="config.json"
 FWALLET="wallet.json"
 
@@ -27,18 +27,29 @@ fi
 sudo apt-get install unzip -y 
 CURRENTDIR=$(pwd)
 if [ -d $HOMEFOLDER ] ; then cd $HOMEFOLDER ; else mkdir $HOMEFOLDER; cd $HOMEFOLDER; fi
-if [ -f $FNAME ]; then rm $FNAME ; fi
+
+if [ -d nkn ]; then 
+  cd nkn
+  git merge
+  else
+  git clone $GITPATH
+  cd nkn
+fi
+LATEST_TAG=$(git tag --sort=-creatordate | head -1)
+cd ..
+
+if [ -f $DIR_NAME.zip ]; then rm $DIR_NAME.zip ; fi
 if [ -f nknd ]; then
         echo -e "${RED}Bin files exist!${NC}"
         else
         echo -e "${YELLOW}Downloading bin files...${NC}"
-        wget $ARCHIVE
+        wget "$RELEASES_PATH/$LATEST_TAG/$DIR_NAME.zip"
         echo -e "${YELLOW}Unzipping bin files...${NC}"
-        unzip $FNAME >/dev/null 2>&1
+        unzip $DIR_NAME.zip >/dev/null 2>&1
         echo -e "${YELLOW}Moving bin files...${NC}"
-        mv $APATH/nkn* .
-        rm -rf $APATH
-        rm $FNAME ; fi
+        mv $DIR_NAME/nkn* .
+        rm -rf $DIR_NAME
+        rm $DIR_NAME.zip ; fi
 
 echo -n -e "${YELLOW}Input Your BeneficiaryAddr:${NC}"
 read -e ADDRESS
