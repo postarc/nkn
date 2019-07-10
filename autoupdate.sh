@@ -33,7 +33,7 @@ echo '  else' >> $SCRIPT_NAME
 echo '  git clone $GITPATH' >> $SCRIPT_NAME
 echo '  cd nkn' >> $SCRIPT_NAME
 echo 'fi' >> $SCRIPT_NAME
-echo -n -e "chown -R $USER:$USER $HOMEFOLDER/nkn" >> $SCRIPT_NAME
+echo -e "chown -R $USER:$USER $HOMEFOLDER/nkn" >> $SCRIPT_NAME
 echo 'LATEST_TAG=$(git tag --sort=-creatordate | head -1)' >> $SCRIPT_NAME
 echo 'cd ..' >> $SCRIPT_NAME
 echo -n 'if [[ -z $' >> $SCRIPT_NAME
