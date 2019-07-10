@@ -13,7 +13,7 @@ fi
 
 CURRENTDIR=$(pwd)
 cd $HOMEFOLDER
-if [ -d nkn ]; then 
+if [ -d nkn ]; then
   cd nkn
   git merge
   else
