@@ -23,8 +23,7 @@ fi
 LATEST_TAG=$(git tag --sort=-creatordate | head -1)
 cd ..
 
-if [ ./nknd -v | grep $LATEST_TAG ]; then exit
-else
+if [[ -n $(./nknd -v | grep $LATEST_TAG) ]]; then 
   sudo systemctl stop nkn.service
   wget "$RELEASES_PATH/$LATEST_TAG/$DIR_NAME.zip"
   unzip "$DIR_NAME.zip"
