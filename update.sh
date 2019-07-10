@@ -20,5 +20,7 @@ mv $APATH/nkn* .
 rm -rf $APATH
 rm $FNAME
 
+sudo systemctl start nkn.service
+
 cd $CURRENTDIR
 rm -rf nkn
