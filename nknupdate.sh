@@ -9,8 +9,9 @@ if [[ "$USER" == "root" ]]; then
         HOMEFOLDER="/root/nkn-node"
  else
         HOMEFOLDER="/home/$USER/nkn-node"
-fi 
+fi
 
+CURRENTDIR=$(pwd)
 cd $HOMEFOLDER
 if [ -d nkn ]; then 
   cd nkn
@@ -31,5 +32,5 @@ else
   mv $DIR_NAME/nkn* .
   systemctl start nkn.service
   rm -rf $DIR_NAME $DIR_NAME.zip
-fi  
+fi
 cd $CURRENTDIR
