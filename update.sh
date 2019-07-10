@@ -10,8 +10,9 @@ if [[ "$USER" == "root" ]]; then
         HOMEFOLDER="/root/nkn-node"
  else
         HOMEFOLDER="/home/$USER/nkn-node"
-fi 
+fi
 
+CURRENTDIR=$(pwd)
 sudo systemctl stop nkn.service
 cd $HOMEFOLDER
 wget $ARCHIVE
