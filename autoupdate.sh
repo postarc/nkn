@@ -1,6 +1,6 @@
 #!/bin/bash
 
-
+GITPATH="https://github.com/nknorg/nkn.git"
 ARCHIVE="https://github.com/nknorg/nkn/releases/download/v1.0.2-beta/linux-amd64.zip"
 FNAME="linux-amd64.zip"
 APATH="linux-amd64"
@@ -12,6 +12,13 @@ if [[ "$USER" == "root" ]]; then
  else
         HOMEFOLDER="/home/$USER/nkn-node"
 fi 
+
+cp nkn/nknupdate.sh $HOMEFOLDER/
+
+
+
+
+
 
 sudo systemctl stop nkn.service
 cd $HOMEFOLDER
