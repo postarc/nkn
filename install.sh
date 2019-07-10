@@ -115,7 +115,7 @@ echo "Description=nkn" >> nkn.service
 echo "[Service]" >> nkn.service
 echo -e "User=$USER" >> nkn.service
 echo -e "WorkingDirectory=$HOMEFOLDER" >> nkn.service
-echo -e "ExecStart=$HOMEFOLDER/nknd -p $WPASSWORD" >> nkn.service
+echo -e "ExecStart=$HOMEFOLDER/nknd -p $WPASSWORD --no-nat" >> nkn.service
 echo "Restart=always" >> nkn.service
 echo "RestartSec=3" >> nkn.service
 echo "LimitNOFILE=500000" >> nkn.service
