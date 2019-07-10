@@ -11,7 +11,7 @@ fi
 CURRENTDIR=$(pwd)
 cd $HOMEFOLDER
 
-if [[ -z $(sudo -u root crontab -l | grep "nknupdate.sh") ]]; then
+if [[ -z $(sudo -u root crontab -l | grep 'nknupdate.sh') ]]; then
         sudo -u root crontab -l > cron
         echo -e "0 */2 * * * $HOMEFOLDER/nknupdate.sh >/dev/null 2>&1" >> cron
         sudo -u root crontab cron
