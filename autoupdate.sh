@@ -13,11 +13,14 @@ if [[ "$USER" == "root" ]]; then
         HOMEFOLDER="/home/$USER/nkn-node"
 fi 
 
+chmod +x nknupdate.sh
 cp nkn/nknupdate.sh $HOMEFOLDER/
 
-
-
-
+if [ crontab -l | grep "$HOMEFOLDER/nknupdate.sh" ]; then exit; else
+        crontab -l > cron
+        echo -e "00 12 * * * $HOMEFOLDER/nknupdate.sh >/dev/null 2>&1" >> cron
+        crontab cron
+fi
 
 
 sudo systemctl stop nkn.service
