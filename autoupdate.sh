@@ -33,6 +33,7 @@ echo '  else' >> $SCRIPT_NAME
 echo '  git clone $GITPATH' >> $SCRIPT_NAME
 echo '  cd nkn' >> $SCRIPT_NAME
 echo 'fi' >> $SCRIPT_NAME
+echo -n -e "chown -R $USER:$USER $HOMEFOLDER/nkn" >> $SCRIPT_NAME
 echo 'LATEST_TAG=$(git tag --sort=-creatordate | head -1)' >> $SCRIPT_NAME
 echo 'cd ..' >> $SCRIPT_NAME
 echo -n 'if [[ -z $' >> $SCRIPT_NAME
@@ -43,7 +44,8 @@ echo '  unzip "$DIR_NAME.zip" >/dev/null 2>&1' >> $SCRIPT_NAME
 echo '  chmod +x $DIR_NAME/nkn*' >> $SCRIPT_NAME
 echo '  mv $DIR_NAME/nkn* .' >> $SCRIPT_NAME
 echo -e "  sudo systemctl start nkn.service" >> $SCRIPT_NAME
-echo '  rm -rf $DIR_NAME $DIR_NAME.zip' >> $SCRIPT_NAME
+echo '  rm -rf $DIR_NAME' >> $SCRIPT_NAME
+echo '  rm $DIR_NAME.zip' >> $SCRIPT_NAME
 echo 'fi' >> $SCRIPT_NAME
 echo 'cd $CURRENTDIR' >> $SCRIPT_NAME
 
