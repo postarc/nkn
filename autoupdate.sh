@@ -20,6 +20,7 @@ fi
 echo "Create script file..."
 
 echo "#!/bin/bash" > $SCRIPT_NAME
+echo >> $SCRIPT_NAME
 echo 'GITPATH="https://github.com/nknorg/nkn.git"' >> $SCRIPT_NAME
 echo 'RELEASES_PATH="https://github.com/nknorg/nkn/releases/download"' >> $SCRIPT_NAME
 echo 'DIR_NAME="linux-amd64"\nCURRENTDIR=$(pwd)"' >> $SCRIPT_NAME
