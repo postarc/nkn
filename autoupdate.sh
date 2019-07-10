@@ -4,7 +4,7 @@ if [[ "$USER" == "root" ]]; then
         HOMEFOLDER="/root/nkn-node"
  else
         HOMEFOLDER="/home/$USER/nkn-node"
-fi 
+fi
 
 CURRENTDIR=$(pwd)
 chmod +x nkn/nknupdate.sh
