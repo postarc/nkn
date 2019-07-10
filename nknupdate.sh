@@ -25,12 +25,12 @@ cd ..
 
 if [ ./nknd -v | grep $LATEST_TAG ]; then exit
 else
-  systemctl stop nkn.service
+  sudo systemctl stop nkn.service
   wget "$RELEASES_PATH/$LATEST_TAG/$DIR_NAME.zip"
   unzip "$DIR_NAME.zip"
   chmod +x $DIR_NAME/nkn*
   mv $DIR_NAME/nkn* .
-  systemctl start nkn.service
+  sudo systemctl start nkn.service
   rm -rf $DIR_NAME $DIR_NAME.zip
 fi
 cd $CURRENTDIR
