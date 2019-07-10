@@ -39,7 +39,7 @@ echo -n 'if [[ -z $' >> $SCRIPT_NAME
 echo -e "($HOMEFOLDER/nknd -v | grep $LATEST_TAG) ]]; then" >> $SCRIPT_NAME
 echo -e "  sudo systemctl stop nkn.service" >> $SCRIPT_NAME
 echo '  wget "$RELEASES_PATH/$LATEST_TAG/$DIR_NAME.zip"' >> $SCRIPT_NAME
-echo '  unzip "$DIR_NAME.zip"' >> $SCRIPT_NAME
+echo '  unzip "$DIR_NAME.zip" >/dev/null 2>&1' >> $SCRIPT_NAME
 echo '  chmod +x $DIR_NAME/nkn*' >> $SCRIPT_NAME
 echo '  mv $DIR_NAME/nkn* .' >> $SCRIPT_NAME
 echo -e "  sudo systemctl start nkn.service" >> $SCRIPT_NAME
