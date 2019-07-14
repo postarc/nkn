@@ -28,7 +28,7 @@ echo 'CURRENTDIR=$(pwd)' >> $SCRIPT_NAME
 echo -e "cd $HOMEFOLDER" >> $SCRIPT_NAME
 echo 'if [ -d nkn ]; then' >> $SCRIPT_NAME
 echo '  cd nkn' >> $SCRIPT_NAME
-echo '  git merge' >> $SCRIPT_NAME
+echo '  git fetch' >> $SCRIPT_NAME
 echo '  else' >> $SCRIPT_NAME
 echo '  git clone $GITPATH' >> $SCRIPT_NAME
 echo '  cd nkn' >> $SCRIPT_NAME
