@@ -55,7 +55,7 @@ if [ -f nknd ]; then
                 rm $DIR_NAME.zip
         else
                 read -e -p "Bin files not found. Do you want to compile? [Y,n]: " ANSWER
-                if [ -z $ANSWER ] && [ $ANSWER = 'Y' ] && [ $ANSWER = 'y' ]; then
+                if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
                         sudo add-apt-repository -y ppa:longsleep/golang-backports
                         sudo apt-get update
                         sudo apt-get install -y golang-go
