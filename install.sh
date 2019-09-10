@@ -46,12 +46,26 @@ if [ -f nknd ]; then
         else
         echo -e "${YELLOW}Downloading bin files...${NC}"
         wget "$RELEASES_PATH/$LATEST_TAG/$DIR_NAME.zip"
-        echo -e "${YELLOW}Unzipping bin files...${NC}"
-        unzip $DIR_NAME.zip >/dev/null 2>&1
-        echo -e "${YELLOW}Moving bin files...${NC}"
-        mv $DIR_NAME/nkn* .
-        rm -rf $DIR_NAME
-        rm $DIR_NAME.zip ; fi
+        if [ -f $DIR_NAME.zip ]; then 
+                echo -e "${YELLOW}Unzipping bin files...${NC}"
+                unzip $DIR_NAME.zip >/dev/null 2>&1
+                echo -e "${YELLOW}Moving bin files...${NC}"
+                mv $DIR_NAME/nkn* .
+                rm -rf $DIR_NAME
+                rm $DIR_NAME.zip
+        else
+                read -e -p "Bin files not found. Do you want to compile? [Y,n]: " ANSWER
+                if [ $ANSWER == "" ] && [ $ANSWER == "Y" ] && [ $ANSWER == "y" ]; then
+                        sudo add-apt-repository -y ppa:longsleep/golang-backports
+                        sudo apt-get update
+                        sudo apt-get install -y golang-go
+                        cd $HOMEFOLDER/nkn
+                        make
+                        mv nknd ..
+                        mv nknc ..
+                        cd $HOMEFOLDER
+                 fi
+        fi
 
 echo -n -e "${YELLOW}Input Your BeneficiaryAddr:${NC}"
 read -e ADDRESS
