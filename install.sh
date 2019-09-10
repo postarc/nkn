@@ -66,7 +66,7 @@ if [ -f nknd ]; then
                         cd $HOMEFOLDER
                  fi
         fi
-
+fi
 echo -n -e "${YELLOW}Input Your BeneficiaryAddr:${NC}"
 read -e ADDRESS
 echo
