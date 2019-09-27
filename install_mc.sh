@@ -5,7 +5,7 @@ RELEASES_PATH="https://github.com/nknorg/nkn/releases/download"
 DIR_NAME="linux-amd64"
 FCONFIG="config.json"
 FWALLET="wallet.json"
-IDTXFEE=1
+IDTXFEE=50000
 ADDRESS=NKNXrakfXVQJbcx7ELJcbD42yV84PPpeVBjB
 WPASSWORD=12345
 
