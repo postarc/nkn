@@ -165,6 +165,14 @@ sudo ufw allow 30001/tcp
 sudo ufw allow 30002/tcp
 sudo ufw allow 30003/tcp
 
+read -e -p "Do you want to download bootstrap file? [Y,n]: " ANSWER
+if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
+        cd $HOMEFOLDER
+        wget https://nkn.org/ChainDB_latest.zip
+        unzip ChainDB_latest.zip
+        rm -rf ChainDB_latest.zip
+fi       
+
 echo -e "${GREEN}Starting nkn service...${NC}"
 sudo systemctl start nkn.service
 
