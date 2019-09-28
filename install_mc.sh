@@ -177,7 +177,7 @@ echo -e "${GREEN}Starting nkn service...${NC}"
 sudo systemctl start nkn.service
 echo
 echo -e "${YELLOW}BeneficiaryAddr: $ADDRESS${NC}"
-echo
+./nknc wallet -l account -p $WPASSWORD
 echo -e "${MAG}Nkn node control:${NC}"
 echo -e "${CYAN}Start nkn node: ${BLUE}sudo systemctl start nkn.service${NC}"
 echo -e "${CYAN}Stop nkn node: ${BLUE}sudo systemctl stop nkn.service${NC}"
