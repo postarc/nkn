@@ -178,15 +178,15 @@ sudo systemctl start nkn.service
 echo
 echo -e "${YELLOW}BeneficiaryAddr: $ADDRESS${NC}"
 ./nknc wallet -l account -p $WPASSWORD
-echo -e "${MAG}Nkn node control:${NC}"
-echo -e "${CYAN}Start nkn node: ${BLUE}sudo systemctl start nkn.service${NC}"
-echo -e "${CYAN}Stop nkn node: ${BLUE}sudo systemctl stop nkn.service${NC}"
-echo -e "${CYAN}Enabe nkn service: ${BLUE}sudo systemctl enable nkn.service${NC}"
-echo -e "${CYAN}Disable nkn service: ${BLUE}sudo systemctl disable nkn.service${NC}"
-echo -e "${CYAN}Status nkn node: ${BLUE}sudo systemctl status nkn.service${NC}"
-echo -e "${YELLOW}or use command ./nknc info --state for statistics${NC}"
-echo -e "${CYAN}For nkn.service file editing: ${BLUE}sudo nano /etc/systemd/system/nkn.service${NC}"
-echo -e "${CYAN}After editing nkn.service file: ${BLUE}sudo systemctl daemon-reload${NC}"
+#echo -e "${MAG}Nkn node control:${NC}"
+#echo -e "${CYAN}Start nkn node: ${BLUE}sudo systemctl start nkn.service${NC}"
+#echo -e "${CYAN}Stop nkn node: ${BLUE}sudo systemctl stop nkn.service${NC}"
+#echo -e "${CYAN}Enabe nkn service: ${BLUE}sudo systemctl enable nkn.service${NC}"
+#echo -e "${CYAN}Disable nkn service: ${BLUE}sudo systemctl disable nkn.service${NC}"
+#echo -e "${CYAN}Status nkn node: ${BLUE}sudo systemctl status nkn.service${NC}"
+#echo -e "${YELLOW}or use command ./nknc info --state for statistics${NC}"
+#echo -e "${CYAN}For nkn.service file editing: ${BLUE}sudo nano /etc/systemd/system/nkn.service${NC}"
+#echo -e "${CYAN}After editing nkn.service file: ${BLUE}sudo systemctl daemon-reload${NC}"
 
 cd $CURRENTDIR
 bash nkn/autoupdate.sh
