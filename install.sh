@@ -71,7 +71,7 @@ echo -n -e "${YELLOW}Input Your BeneficiaryAddr:${NC}"
 read -e ADDRESS
 echo -n -e "${YELLOW}Input Your RegisterIDTxnFee in sat(default 1 sat):${NC}"
 read -e IDTXFEE
-if [ -z $IDTXFEE ] || [ $IDTXFEE -lt 1 ] || [$IDTXFEE -gt 100000000 ]; then IDTXFEE=1 ; fi
+if [[ ! ${IDTXFEE} =~ ^[0-9]+$ ]] ; then IDTXFEE=1 ; fi
 echo
 if [ -f $FCONFIG ]; then rm $FCONFIG ; fi
 cat << EOF > $FCONFIG
