@@ -169,8 +169,8 @@ sudo ufw allow 30001/tcp
 sudo ufw allow 30002/tcp
 sudo ufw allow 30003/tcp
 
-read -e -p "Do you want to download bootstrap file? [y,N]: " ANSWER
-if [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
+read -e -p "Do you want to download bootstrap file? [Y,n]: " ANSWER
+if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
         cd $HOMEFOLDER
         wget https://nkn.org/ChainDB_pruned_latest.zip
         unzip ChainDB_pruned_latest.zip | tr '\n' '\r'
