@@ -69,6 +69,9 @@ if [ -f nknd ]; then
 fi
 echo -n -e "${YELLOW}Input Your BeneficiaryAddr:${NC}"
 read -e ADDRESS
+echo -n -n "${YELLOW}Input Your RegisterIDTxnFee in sat(default 1 sat):${NC}"
+read -e IDTXFEE
+if [ $IDTXFEE = '' ] || [ $IDTXFEE < 1 ] || [$IDTXFEE >100000000 ]; then IDTXFEE=1
 echo
 if [ -f $FCONFIG ]; then rm $FCONFIG ; fi
 cat << EOF > $FCONFIG
