@@ -5,7 +5,7 @@ RELEASES_PATH="https://github.com/nknorg/nkn/releases/download"
 DIR_NAME="linux-amd64"
 exec {DIR_LIST}<dir.list
 exec {START_SCRIPT}<nknstart.sh
-CURRENTDIR=$(PWD)
+CURRENTDIR=${PWD}
 
 if [ -d nkn ]; then
   cd nkn
