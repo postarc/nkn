@@ -32,7 +32,7 @@ function Copy_Bin(){
         echo -e "${YELLOW}Copy bin files...${NC}"
         cp $HOMEFOLDER/nkn/nknd $CURRENTDIR/$NODEDIR$INDEX/.
         cp $HOMEFOLDER/nkn/nknc $CURRENTDIR/$NODEDIR$INDEX/.
-}        
+}
 
 function Config_Create(){
 echo -n -e "${YELLOW}Input Your BeneficiaryAddr[$ADDRESS]:${NC}"
@@ -103,7 +103,7 @@ function Create_Wallet(){
 if [ -f $CURRENTDIR/$NODEDIR$INDEX/$FWALLET ] ; then
         echo -e "${RED}Wallet already exist!${NC}"
         echo -n -e "${YELLOW}Input your wallet password:${NC}"
-        read -e WPASSWORD        
+        read -e WPASSWORD
         else
         cd $CURRENTDIR/$NODEDIR$INDEX
         echo -e "${YELLOW}Create new wallet...${NC}"
@@ -140,7 +140,7 @@ if [ -f nknd ]; then
         else
         echo -e "${YELLOW}Downloading bin files...${NC}"
         wget "$RELEASES_PATH/$LATEST_TAG/$DIR_NAME.zip"
-        if [ -f $DIR_NAME.zip ]; then 
+        if [ -f $DIR_NAME.zip ]; then
                 echo -e "${YELLOW}Unzipping bin files...${NC}"
                 unzip $DIR_NAME.zip >/dev/null 2>&1
                 chmod +x $DIR_NAME/nkn*
@@ -159,7 +159,7 @@ if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
         wget https://nkn.org/ChainDB_pruned_latest.zip
         unzip ChainDB_pruned_latest.zip | tr '\n' '\r'
         rm -rf ChainDB_pruned_latest.zip
-fi 
+fi
 ANSWER="y"
 until [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]
 do
@@ -188,5 +188,5 @@ if [ ! cat cron | grep "$HOMEFOLDER/dockercheck.sh" ]; then echo -e "0 */2 * * *
 sudo crontab -e -u root cron
 cp $CURRENTDIR/nkn/dockercheck.sh $HOMEFOLDER
 chmod +x $HOMEFOLDER/*.sh
-cd $CURRENTDIR 
+cd $CURRENTDIR
 rm -rf nkn
