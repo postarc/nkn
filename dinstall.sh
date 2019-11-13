@@ -161,7 +161,7 @@ if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
         rm -rf ChainDB_pruned_latest.zip
 fi
 ANSWER="y"
-until [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]
+while [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]
 do
 Copy_Bin
 Config_Create
@@ -181,10 +181,10 @@ echo -e "docker run -d -p $IP_ADDRESS:30001-30003:30001-30003 -v $CURRENTDIR/$NO
 echo -e $$NODEDIR$INDEX >> $DIR_LIST
 echo -e -n "Do you want to set up another docker container?[Y,n]:"; read -e ANSWER
 done
-echo -e "${YELLOW}Writecrontab...${NC}"
+echo -e "${YELLOW}Write crontab...${NC}"
 sudo crontab -l -u root > cron
-if [ ! cat cron | grep "$HOMEFOLDER/$START_SCRIPT" ]; then echo -e "bash $HOMEFOLDER/$START_SCRIPT" >> cron; fi
-if [ ! cat cron | grep "$HOMEFOLDER/dockercheck.sh" ]; then echo -e "0 */2 * * * cd $HOMEFOLDER && bash $HOMEFOLDER/dockercheck.sh >/dev/null 2>&1" >> cron; fi
+if [ ! $((cat cron | grep "$HOMEFOLDER/$START_SCRIPT")) ]; then echo -e "bash $HOMEFOLDER/$START_SCRIPT" >> cron; fi
+if [ ! $((cat cron | grep "$HOMEFOLDER/dockercheck.sh")) ]; then echo -e "0 */2 * * * cd $HOMEFOLDER && bash $HOMEFOLDER/dockercheck.sh >/dev/null 2>&1" >> cron; fi
 sudo crontab -e -u root cron
 cp $CURRENTDIR/nkn/dockercheck.sh $HOMEFOLDER
 chmod +x $HOMEFOLDER/*.sh
