@@ -185,7 +185,7 @@ done
 echo -e "${YELLOW}Write crontab...${NC}"
 sudo crontab -l -u root > cron
 if ! cat cron | grep "$HOMEFOLDER/$START_SCRIPT"; then echo -e "bash $HOMEFOLDER/$START_SCRIPT" >> cron; fi
-if ! cat cron | grep "$HOMEFOLDER/dockercheck.sh"; then echo -e "0 */2 * * * cd $HOMEFOLDER && bash $HOMEFOLDER/dockercheck.sh >/dev/null 2>&1" >> cron; fi
+if ! cat cron | grep "$HOMEFOLDER/dockercheck.sh"; then echo -e "0 */2 * * *  bash $HOMEFOLDER/dockercheck.sh >/dev/null 2>&1" >> cron; fi
 sudo crontab -u root cron
 cp $CURRENTDIR/nkn/dockercheck.sh $HOMEFOLDER
 chmod +x $HOMEFOLDER/*.sh
