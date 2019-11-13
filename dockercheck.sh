@@ -36,5 +36,5 @@ if [[ -z $($DOCKER_NAME/nknd -v | grep $LATEST_TAG) ]]; then
 fi
    docker top $DOCKER_NAME | grep nknd
    if [ $? -ne 0 ]; then $START_COM ; fi
-done 
+done
 cd $CURRENTDIR
