@@ -13,7 +13,9 @@ NODEDIR="nkn"
 INDEX=1
 IP_ADDRESS=""
 ADDRESS=""
-
+HOMEFOLDER="${PWD}/nknscripts"
+if [ -f dinstall.sh ]; then cd .. ; fi
+CURRENTDIR=$(pwd)
 
 #color
 BLUE="\033[0;34m"
@@ -24,8 +26,7 @@ RED='\033[0;31m'
 GREEN="\033[0;32m"
 NC='\033[0m'
 MAG='\e[1;35m'
-HOMEFOLDER="${PWD}/nknscripts"
-CURRENTDIR=$(pwd)
+
 
 function Copy_Bin(){
         echo -e "${YELLOW}Copy bin files...${NC}"
@@ -190,6 +191,7 @@ sudo crontab -l -u root > cron
 if [ ! cat cron | grep "$HOMEFOLDER/$START_SCRIPT" ]; then echo -e "bash $HOMEFOLDER/$START_SCRIPT" >> cron; fi
 if [ ! cat cron | grep "$HOMEFOLDER/dockercheck.sh" ]; then echo -e "0 */2 * * * cd $HOMEFOLDER && bash $HOMEFOLDER/dockercheck.sh >/dev/null 2>&1" >> cron; fi
 sudo crontab -e -u root cron
-
-cd $CURRENTDIR
+cp $CURRENTDIR/nkn/dockercheck.sh $HOMEFOLDER
+chmod +x $HOMEFOLDER/*.sh
+cd $CURRENTDIR 
 rm -rf nkn
