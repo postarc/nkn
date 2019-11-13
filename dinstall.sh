@@ -112,9 +112,6 @@ if [ -f $HOMEFOLDER/$NODEDIR$INDEX/$FWALLET ] ; then
 fi
 }
 
-function Copy_Strap(){
-cp -r ChainDB $HOMEFOLDER/$NODEDIR$INDEX/
-}
 
 echo -e "${CYAN}Preparing the system for installation...${NC}"
 sudo apt-get update
@@ -173,7 +170,7 @@ Config_Create
 Create_Wallet
 echo -e -n "${MAG}Input IP address[IP_ADDRESS]:${NC}"; read -e IP_ADDR
 if [ -n $IP_ADDR ]; then IP_ADDRESS=$IP_ADDR; fi
-if [ -d 'ChainDB' ]; then Copy_Strap; fi
+if [ -d 'ChainDB' ]; then cp -r ChainDB $HOMEFOLDER/$NODEDIR$INDEX/; fi
 cd $HOMEFOLDER/$NODEDIR$INDEX
 echo -e "${YELLOW}"
 ./nknc wallet -l account -p $WPASSWORD
