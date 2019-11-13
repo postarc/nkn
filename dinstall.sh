@@ -5,6 +5,9 @@ RELEASES_PATH="https://github.com/nknorg/nkn/releases/download"
 DIR_NAME="linux-amd64"
 FCONFIG="config.json"
 FWALLET="wallet.json"
+START_SCRIPT="nknstart.sh"
+IP_LIST="ip.list"
+DIR_LIST="dir.list"
 IDTXFEE=1
 NODEDIR="nkn"
 INDEX=1
@@ -137,6 +140,9 @@ LATEST_TAG=$(git tag --sort=-creatordate | head -1)
 cd ..
 
 if [ -f $DIR_NAME.zip ]; then rm $DIR_NAME.zip ; fi
+if [ -f $START_SCRIPT ]; then rm $START_SCRIPT; fi
+if [ -f $DIR_LIST ]; then rm $DIR_LIST; fi
+if [ -f $IP_LIST ]; then rm $IP_LIST; fi
 if [ -f nknd ]; then
         echo -e "${RED}Bin files exist!${NC}"
         else
@@ -163,8 +169,9 @@ fi
 Copy_Bin
 Config_Create
 Create_Wallet
-echo -e "${MAG}Input IP address:${NC}"
-read -e IP_ADDRESS;
+echo -e "${MAG}Input IP address[IP_ADDRESS]:${NC}"
+read -e IP_ADDR;
+if [ -n $IP_ADDR ]; then IP_ADDRESS=$IP_ADDR; fi
 if [ -d 'ChainDB' ]; then Copy_Strap; fi
 cd $HOMEFOLDER/$NODEDIR$INDEX
 echo -e "${YELLOW}"
@@ -173,9 +180,10 @@ echo -e "${NC}"
 cd $HOMEFOLDER
 echo -e "${CYAN}Send $IDTXFEE satoshi to this address and press <ENTER>${NC}"
 read
-echo -e "${GREEN}Create and run docker, write to file...${NC}"
-
-echo
+echo -e "${GREEN}Writing a docker launching script...${NC}"
+echo -e "sudo docker run -d -p $IP_ADDRESS:30001-30003:30001-30003 -v $HOMEFOLDER/$NODEDIR$INDEX:/nkn --name $NODEDIR$INDEX -w /nkn --rm -it nknorg/nkn /nkn/nknd -p $WPASSWORD" >> $START_SCRIPT
+echo -e $IP_ADDRESS >> $IP_LIST
+echo -e $$NODEDIR$INDEX >> $DIR_LIST
 
 echo -e "${MAG}Nkn node control:${NC}"
 echo -e "${CYAN}Start nkn node: ${BLUE}sudo systemctl start nkn.service${NC}"
