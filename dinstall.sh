@@ -139,7 +139,7 @@ if [ -f nknd ]; then
         echo -e "${RED}Bin files exist!${NC}"
         else
         echo -e "${YELLOW}Downloading bin files...${NC}"
-        wget "$RELEASES_PATH/$LATEST_TAG$/$DIR_NAME.zip"
+        wget "$RELEASES_PATH/$LATEST_TAG/$DIR_NAME.zip"
         if [ -f $DIR_NAME.zip ]; then 
                 echo -e "${YELLOW}Unzipping bin files...${NC}"
                 unzip $DIR_NAME.zip >/dev/null 2>&1
