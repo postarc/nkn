@@ -147,6 +147,7 @@ if [ -f nknd ]; then
         if [ -f $DIR_NAME.zip ]; then 
                 echo -e "${YELLOW}Unzipping bin files...${NC}"
                 unzip $DIR_NAME.zip >/dev/null 2>&1
+                chmod +x $DIR_NAME/nkn*
                 cp $DIR_NAME/nkn* .
                 rm -rf $DIR_NAME.zip $DIR_NAME
         else
