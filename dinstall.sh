@@ -189,5 +189,5 @@ if ! cat cron | grep "$HOMEFOLDER/dockercheck.sh"; then echo -e "0 */2 * * * cd 
 sudo crontab -u root cron
 cp $CURRENTDIR/nkn/dockercheck.sh $HOMEFOLDER
 chmod +x $HOMEFOLDER/*.sh
-cd $CURRENTDIR
-rm -rf nkn
+#cd $CURRENTDIR
+#rm -rf nkn
