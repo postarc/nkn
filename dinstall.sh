@@ -165,12 +165,13 @@ if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
         unzip ChainDB_pruned_latest.zip | tr '\n' '\r'
         rm -rf ChainDB_pruned_latest.zip
 fi 
-
+ANSWER="y"
+until [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]
+do
 Copy_Bin
 Config_Create
 Create_Wallet
-echo -e "${MAG}Input IP address[IP_ADDRESS]:${NC}"
-read -e IP_ADDR;
+echo -e -n "${MAG}Input IP address[IP_ADDRESS]:${NC}"; read -e IP_ADDR
 if [ -n $IP_ADDR ]; then IP_ADDRESS=$IP_ADDR; fi
 if [ -d 'ChainDB' ]; then Copy_Strap; fi
 cd $HOMEFOLDER/$NODEDIR$INDEX
@@ -178,23 +179,11 @@ echo -e "${YELLOW}"
 ./nknc wallet -l account -p $WPASSWORD
 echo -e "${NC}"
 cd $HOMEFOLDER
-echo -e "${CYAN}Send $IDTXFEE satoshi to this address and press <ENTER>${NC}"
-read
-echo -e "${GREEN}Writing a docker launching script...${NC}"
-echo -e "sudo docker run -d -p $IP_ADDRESS:30001-30003:30001-30003 -v $HOMEFOLDER/$NODEDIR$INDEX:/nkn --name $NODEDIR$INDEX -w /nkn --rm -it nknorg/nkn /nkn/nknd -p $WPASSWORD" >> $START_SCRIPT
+echo -e -n "${CYAN}Send $IDTXFEE satoshi to this address and press <ENTER>${NC}"; read
 echo -e $IP_ADDRESS >> $IP_LIST
 echo -e $$NODEDIR$INDEX >> $DIR_LIST
-
-echo -e "${MAG}Nkn node control:${NC}"
-echo -e "${CYAN}Start nkn node: ${BLUE}sudo systemctl start nkn.service${NC}"
-echo -e "${CYAN}Stop nkn node: ${BLUE}sudo systemctl stop nkn.service${NC}"
-echo -e "${CYAN}Enabe nkn service: ${BLUE}sudo systemctl enable nkn.service${NC}"
-echo -e "${CYAN}Disable nkn service: ${BLUE}sudo systemctl disable nkn.service${NC}"
-echo -e "${CYAN}Status nkn node: ${BLUE}sudo systemctl status nkn.service${NC}"
-echo -e "${YELLOW}or use command ./nknc info --state for statistics${NC}"
-echo -e "${CYAN}For nkn.service file editing: ${BLUE}sudo nano /etc/systemd/system/nkn.service${NC}"
-echo -e "${CYAN}After editing nkn.service file: ${BLUE}sudo systemctl daemon-reload${NC}"
+echo -e -n "Do you want to set up another docker container?[Y,n]:"; read -e ANSWER
+done
 
 cd $CURRENTDIR
-bash nkn/autoupdate.sh
 rm -rf nkn
