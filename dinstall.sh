@@ -187,7 +187,8 @@ sudo crontab -l -u root > cron
 if ! cat cron | grep "$HOMEFOLDER/$START_SCRIPT"; then echo -e "@reboot bash $HOMEFOLDER/$START_SCRIPT" >> cron; fi
 if ! cat cron | grep "$HOMEFOLDER/dockercheck.sh"; then echo -e "0 */2 * * * cd $HOMEFOLDER && bash $HOMEFOLDER/dockercheck.sh >/dev/null 2>&1" >> cron; fi
 sudo crontab -u root cron
+rm cron
 cp $CURRENTDIR/nkn/dockercheck.sh $HOMEFOLDER
 chmod +x $HOMEFOLDER/*.sh
-#cd $CURRENTDIR
-#rm -rf nkn
+cd $CURRENTDIR
+rm -rf nkn
