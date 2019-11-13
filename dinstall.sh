@@ -116,24 +116,19 @@ fi
 
 
 echo -e "${CYAN}Preparing the system for installation...${NC}"
-sudo apt-get update
-sudo apt-get install unzip -y
 sudo add-apt-repository -y ppa:longsleep/golang-backports
-sudo apt-get update
-sudo apt-get install -y golang-go
 sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D -y
 sudo apt-add-repository 'deb https://apt.dockerproject.org/repo ubuntu-xenial main' -y
 sudo apt-get update
+sudo apt-get install unzip -y
+sudo apt-get install -y golang-go
 sudo apt-get install -y docker-engine
 
+if [ ! -d $HOMEFOLDER ]; then mkdir $HOMEFOLDER; fi
 cd $HOMEFOLDER
-if [ -d nkn ]; then 
-  cd nkn
-  git merge
-  else
-  git clone $GITPATH
-  cd nkn
-fi
+if [ -d nkn ]; then cd nkn; git merge;
+else git clone $GITPATH; cd nkn; fi
+
 LATEST_TAG=$(git tag --sort=-creatordate | head -1)
 
 if [ -f $DIR_NAME.zip ]; then rm $DIR_NAME.zip ; fi
@@ -144,7 +139,7 @@ if [ -f nknd ]; then
         echo -e "${RED}Bin files exist!${NC}"
         else
         echo -e "${YELLOW}Downloading bin files...${NC}"
-        wget "$RELEASES_PATH/$LATEST_TAG/$DIR_NAME.zip"
+        wget "$RELEASES_PATH/$LATEST_TAG$/DIR_NAME.zip"
         if [ -f $DIR_NAME.zip ]; then 
                 echo -e "${YELLOW}Unzipping bin files...${NC}"
                 unzip $DIR_NAME.zip >/dev/null 2>&1
