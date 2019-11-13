@@ -25,11 +25,12 @@ GREEN="\033[0;32m"
 NC='\033[0m'
 MAG='\e[1;35m'
 HOMEFOLDER="${PWD}/nknscripts"
+CURRENTDIR=$(pwd)
 
 function Copy_Bin(){
         echo -e "${YELLOW}Copy bin files...${NC}"
-        cp $HOMEFOLDER/nkn/nknd $HOMEFOLDER/$NODEDIR$INDEX/.
-        cp $HOMEFOLDER/nkn/nknc $HOMEFOLDER/$NODEDIR$INDEX/.
+        cp $HOMEFOLDER/nkn/nknd $CURRENTDIR/$NODEDIR$INDEX/.
+        cp $HOMEFOLDER/nkn/nknc $CURRENTDIR/$NODEDIR$INDEX/.
 }        
 
 function Config_Create(){
@@ -41,7 +42,7 @@ read -e IDTXFEE
 if [[ ! ${IDTXFEE} =~ ^[0-9]+$ ]] ; then IDTXFEE=1 ; fi
 echo
 if [ -f $FCONFIG ]; then rm $FCONFIG ; fi
-cat << EOF > $HOMEFOLDER/$NODEDIR$INDEX/$FCONFIG
+cat << EOF > $CURRENTDIR/$NODEDIR$INDEX/$FCONFIG
 {
   "BeneficiaryAddr": "$ADDRESS",
   "RegisterIDTxnFee": $IDTXFEE,
@@ -98,12 +99,12 @@ EOF
 }
 
 function Create_Wallet(){
-if [ -f $HOMEFOLDER/$NODEDIR$INDEX/$FWALLET ] ; then
+if [ -f $CURRENTDIR/$NODEDIR$INDEX/$FWALLET ] ; then
         echo -e "${RED}Wallet already exist!${NC}"
         echo -n -e "${YELLOW}Input your wallet password:${NC}"
         read -e WPASSWORD        
         else
-        cd $HOMEFOLDER/$NODEDIR$INDEX
+        cd $CURRENTDIR/$NODEDIR$INDEX
         echo -e "${YELLOW}Create new wallet...${NC}"
         echo -n -e "${YELLOW}Input your wallet password:${NC}"
         read -e WPASSWORD
@@ -124,7 +125,6 @@ sudo apt-add-repository 'deb https://apt.dockerproject.org/repo ubuntu-xenial ma
 sudo apt-get update
 sudo apt-get install -y docker-engine
 
-CURRENTDIR=$(pwd)
 cd $HOMEFOLDER
 if [ -d nkn ]; then 
   cd nkn
@@ -134,7 +134,6 @@ if [ -d nkn ]; then
   cd nkn
 fi
 LATEST_TAG=$(git tag --sort=-creatordate | head -1)
-cd ..
 
 if [ -f $DIR_NAME.zip ]; then rm $DIR_NAME.zip ; fi
 if [ -f $START_SCRIPT ]; then rm $START_SCRIPT; fi
@@ -148,6 +147,8 @@ if [ -f nknd ]; then
         if [ -f $DIR_NAME.zip ]; then 
                 echo -e "${YELLOW}Unzipping bin files...${NC}"
                 unzip $DIR_NAME.zip >/dev/null 2>&1
+                cp $DIR_NAME/nkn* .
+                rm -rf $DIR_NAME.zip $DIR_NAME
         else
                 read -e -p "Bin files not found. Do you want to compile? [Y,n]: " ANSWER
                 if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
@@ -170,17 +171,24 @@ Config_Create
 Create_Wallet
 echo -e -n "${MAG}Input IP address[IP_ADDRESS]:${NC}"; read -e IP_ADDR
 if [ -n $IP_ADDR ]; then IP_ADDRESS=$IP_ADDR; fi
-if [ -d 'ChainDB' ]; then cp -r ChainDB $HOMEFOLDER/$NODEDIR$INDEX/; fi
-cd $HOMEFOLDER/$NODEDIR$INDEX
+if [ -d 'ChainDB' ]; then cp -r ChainDB $CURRENTDIR/$NODEDIR$INDEX/; fi
+cd $CURRENTDIR/$NODEDIR$INDEX
 echo -e "${YELLOW}"
 ./nknc wallet -l account -p $WPASSWORD
 echo -e "${NC}"
 cd $HOMEFOLDER
 echo -e -n "${CYAN}Send $IDTXFEE satoshi to this address and press <ENTER>${NC}"; read
-echo -e $IP_ADDRESS >> $IP_LIST
+echo -e "${GREEN}Create a startup script...${NC}"
+echo -e "docker run -d -p $IP_ADDRESS:30001-30003:30001-30003 -v $CURRENTDIR/$NODEDIR$INDEX:/nkn --name $NODEDIR$INDEX -w /nkn --rm -it nknorg/nkn /nkn/nknd -p $WPASSWORD" >> START_SCRIPT
+#echo -e $IP_ADDRESS >> $IP_LIST
 echo -e $$NODEDIR$INDEX >> $DIR_LIST
 echo -e -n "Do you want to set up another docker container?[Y,n]:"; read -e ANSWER
 done
+echo -e "${YELLOW}Writecrontab...${NC}"
+sudo crontab -l -u root > cron
+if [ ! cat cron | grep "$HOMEFOLDER/$START_SCRIPT" ]; then echo -e "bash $HOMEFOLDER/$START_SCRIPT" >> cron; fi
+if [ ! cat cron | grep "$HOMEFOLDER/dockercheck.sh" ]; then echo -e "0 */2 * * * cd $HOMEFOLDER && bash $HOMEFOLDER/dockercheck.sh >/dev/null 2>&1" >> cron; fi
+sudo crontab -e -u root cron
 
 cd $CURRENTDIR
 rm -rf nkn
