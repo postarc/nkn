@@ -19,7 +19,7 @@ LATEST_TAG=$(git tag --sort=-creatordate | head -1)
 cd $CURRENTDIR; cd ..
 while read -r -u "$DIR_LIST" DOCKER_NAME && read -r -u "$START_SCRIPT" START_COM
 do
-if [[ -z $($DIR_NAME/nknd -v | grep $LATEST_TAG) ]]; then
+if [[ -z $($DOCKER_NAME/nknd -v | grep $LATEST_TAG) ]]; then
   docker stop $DOCKER_NAME
   if [ -f $DIR_NAME.zip ]; then rm $DIR_NAME.zip; fi
   wget "$RELEASES_PATH/$LATEST_TAG/$DIR_NAME.zip"
