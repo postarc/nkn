@@ -167,7 +167,7 @@ do
 Copy_Bin
 Config_Create
 Create_Wallet
-echo -e -n "${MAG}Input IP address[IP_ADDRESS]:${NC}"; read -e IP_ADDR
+echo -e -n "${MAG}Input IP address[$IP_ADDRESS]:${NC}"; read -e IP_ADDR
 if [ -n $IP_ADDR ]; then IP_ADDRESS=$IP_ADDR; fi
 if [ -d 'ChainDB' ]; then cp -r ChainDB $CURRENTDIR/$NODEDIR$INDEX/; fi
 cd $CURRENTDIR/$NODEDIR$INDEX
