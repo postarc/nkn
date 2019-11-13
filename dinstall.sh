@@ -6,6 +6,10 @@ DIR_NAME="linux-amd64"
 FCONFIG="config.json"
 FWALLET="wallet.json"
 IDTXFEE=1
+NODEDIR="nkn"
+INDEX=1
+IP_ADDRESS=""
+ADDRESS=""
 
 
 #color
@@ -17,64 +21,24 @@ RED='\033[0;31m'
 GREEN="\033[0;32m"
 NC='\033[0m'
 MAG='\e[1;35m'
+HOMEFOLDER="${PWD}/nknscripts"
 
-if [[ "$USER" == "root" ]]; then
-        HOMEFOLDER="/root/nkn-node"
-#       echo -e "${RED}Do not install node in the root folder, please create new user${NC}"
-#        exit 0
- else
-        HOMEFOLDER="/home/$USER/nkn-node"
-fi
+function Copy_Bin(){
+        echo -e "${YELLOW}Copy bin files...${NC}"
+        cp $HOMEFOLDER/nkn/nknd $HOMEFOLDER/$NODEDIR$INDEX/.
+        cp $HOMEFOLDER/nkn/nknc $HOMEFOLDER/$NODEDIR$INDEX/.
+}        
 
-sudo apt-get install unzip -y 
-CURRENTDIR=$(pwd)
-if [ -d $HOMEFOLDER ] ; then cd $HOMEFOLDER ; else mkdir $HOMEFOLDER; cd $HOMEFOLDER; fi
-
-if [ -d nkn ]; then 
-  cd nkn
-  git merge
-  else
-  git clone $GITPATH
-  cd nkn
-fi
-LATEST_TAG=$(git tag --sort=-creatordate | head -1)
-cd ..
-
-if [ -f $DIR_NAME.zip ]; then rm $DIR_NAME.zip ; fi
-if [ -f nknd ]; then
-        echo -e "${RED}Bin files exist!${NC}"
-        else
-        echo -e "${YELLOW}Downloading bin files...${NC}"
-        wget "$RELEASES_PATH/$LATEST_TAG/$DIR_NAME.zip"
-        if [ -f $DIR_NAME.zip ]; then 
-                echo -e "${YELLOW}Unzipping bin files...${NC}"
-                unzip $DIR_NAME.zip >/dev/null 2>&1
-                echo -e "${YELLOW}Moving bin files...${NC}"
-                mv $DIR_NAME/nkn* .
-                rm -rf $DIR_NAME
-                rm $DIR_NAME.zip
-        else
-                read -e -p "Bin files not found. Do you want to compile? [Y,n]: " ANSWER
-                if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
-                        sudo add-apt-repository -y ppa:longsleep/golang-backports
-                        sudo apt-get update
-                        sudo apt-get install -y golang-go
-                        cd $HOMEFOLDER/nkn
-                        make
-                        mv nknd ..
-                        mv nknc ..
-                        cd $HOMEFOLDER
-                 fi
-        fi
-fi
-echo -n -e "${YELLOW}Input Your BeneficiaryAddr:${NC}"
-read -e ADDRESS
-echo -n -e "${YELLOW}Input Your RegisterIDTxnFee in sat(default 1 sat):${NC}"
+function Config_Create(){
+echo -n -e "${YELLOW}Input Your BeneficiaryAddr[$ADDRESS]:${NC}"
+read -e ADDR
+if [ -n $ADDR ]; then ADDRESS=$ADDR; fi
+echo -n -e "${YELLOW}Input Your RegisterIDTxnFee in sat[1]:${NC}"
 read -e IDTXFEE
 if [[ ! ${IDTXFEE} =~ ^[0-9]+$ ]] ; then IDTXFEE=1 ; fi
 echo
 if [ -f $FCONFIG ]; then rm $FCONFIG ; fi
-cat << EOF > $FCONFIG
+cat << EOF > $HOMEFOLDER/$NODEDIR$INDEX/$FCONFIG
 {
   "BeneficiaryAddr": "$ADDRESS",
   "RegisterIDTxnFee": $IDTXFEE,
@@ -128,61 +92,91 @@ cat << EOF > $FCONFIG
   "GenesisBlockProposer": "a0309f8280ca86687a30ca86556113a253762e40eb884fc6063cad2b1ebd7de5"
 }
 EOF
-sleep 2
-if [ -f $FWALLET ] ; then
+}
+
+function Create_Wallet(){
+if [ -f $HOMEFOLDER/$NODEDIR$INDEX/$FWALLET ] ; then
         echo -e "${RED}Wallet already exist!${NC}"
         echo -n -e "${YELLOW}Input your wallet password:${NC}"
         read -e WPASSWORD        
         else
+        cd $HOMEFOLDER/$NODEDIR$INDEX
         echo -e "${YELLOW}Create new wallet...${NC}"
         echo -n -e "${YELLOW}Input your wallet password:${NC}"
         read -e WPASSWORD
         ./nknc wallet -c -p $WPASSWORD
+        cd $HOMEFOLDER
+fi
+}
+
+function Copy_Strap(){
+cp -r ChainDB $HOMEFOLDER/$NODEDIR$INDEX/
+}
+
+echo -e "${CYAN}Preparing the system for installation...${NC}"
+sudo apt-get update
+sudo apt-get install unzip -y
+sudo add-apt-repository -y ppa:longsleep/golang-backports
+sudo apt-get update
+sudo apt-get install -y golang-go
+sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D -y
+sudo apt-add-repository 'deb https://apt.dockerproject.org/repo ubuntu-xenial main' -y
+sudo apt-get update
+sudo apt-get install -y docker-engine
+
+CURRENTDIR=$(pwd)
+cd $HOMEFOLDER
+if [ -d nkn ]; then 
+  cd nkn
+  git merge
+  else
+  git clone $GITPATH
+  cd nkn
+fi
+LATEST_TAG=$(git tag --sort=-creatordate | head -1)
+cd ..
+
+if [ -f $DIR_NAME.zip ]; then rm $DIR_NAME.zip ; fi
+if [ -f nknd ]; then
+        echo -e "${RED}Bin files exist!${NC}"
+        else
+        echo -e "${YELLOW}Downloading bin files...${NC}"
+        wget "$RELEASES_PATH/$LATEST_TAG/$DIR_NAME.zip"
+        if [ -f $DIR_NAME.zip ]; then 
+                echo -e "${YELLOW}Unzipping bin files...${NC}"
+                unzip $DIR_NAME.zip >/dev/null 2>&1
+        else
+                read -e -p "Bin files not found. Do you want to compile? [Y,n]: " ANSWER
+                if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
+                        make
+                 fi
         fi
-sleep 2
-echo -e "${YELLOW}Creating nkn service...${NC}"
-
-echo "[Unit]" > nkn.service
-echo "Description=nkn" >> nkn.service
-echo "[Service]" >> nkn.service
-echo -e "User=$USER" >> nkn.service
-echo -e "WorkingDirectory=$HOMEFOLDER" >> nkn.service
-echo -e "ExecStart=$HOMEFOLDER/nknd -p $WPASSWORD" >> nkn.service
-echo "Restart=always" >> nkn.service
-echo "RestartSec=3" >> nkn.service
-echo "LimitNOFILE=500000" >> nkn.service
-echo "[Install]" >> nkn.service
-echo "WantedBy=default.target" >> nkn.service
-
-sudo cp nkn.service /etc/systemd/system/nkn.service
-sudo systemctl enable nkn.service
-
-rm nkn.service
-
-#echo -e "${YELLOW}Writing new crontab...${NC}"
-#if ! crontab -l | grep "/nknd -p"; then
-#  (crontab -l ; echo "@reboot $HOMEFOLDER/nknd -p $WPASSWORD") | crontab -
-#fi
-
-echo -e "${YELLOW}firewall setup...${NC}"
-sudo ufw allow 30001/tcp
-sudo ufw allow 30002/tcp
-sudo ufw allow 30003/tcp
-
+fi
 read -e -p "Do you want to download bootstrap file? [Y,n]: " ANSWER
 if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
         cd $HOMEFOLDER
         wget https://nkn.org/ChainDB_pruned_latest.zip
         unzip ChainDB_pruned_latest.zip | tr '\n' '\r'
         rm -rf ChainDB_pruned_latest.zip
-fi       
+fi 
 
-echo -e "${GREEN}Starting nkn service...${NC}"
-sudo systemctl start nkn.service
-echo
+Copy_Bin
+Config_Create
+Create_Wallet
+echo -e "${MAG}Input IP address:${NC}"
+read -e IP_ADDRESS;
+if [ -d 'ChainDB' ]; then Copy_Strap; fi
+cd $HOMEFOLDER/$NODEDIR$INDEX
 echo -e "${YELLOW}"
 ./nknc wallet -l account -p $WPASSWORD
 echo -e "${NC}"
+cd $HOMEFOLDER
+echo -e "${CYAN}Send $IDTXFEE satoshi to this address and press <ENTER>${NC}"
+read
+echo -e "${GREEN}Create and run docker, write to file...${NC}"
+
+echo
+
 echo -e "${MAG}Nkn node control:${NC}"
 echo -e "${CYAN}Start nkn node: ${BLUE}sudo systemctl start nkn.service${NC}"
 echo -e "${CYAN}Stop nkn node: ${BLUE}sudo systemctl stop nkn.service${NC}"
