@@ -16,7 +16,7 @@ if [ -d nkn ]; then
 fi
 
 LATEST_TAG=$(git tag --sort=-creatordate | head -1)
-
+cd $CURRENTDIR; cd ..
 while read -r -u "$DIR_LIST" DOCKER_NAME && read -r -u "$START_SCRIPT" START_COM
 do
 if [[ -z $($DIR_NAME/nknd -v | grep $LATEST_TAG) ]]; then
