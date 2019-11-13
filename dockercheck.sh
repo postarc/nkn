@@ -3,12 +3,13 @@
 GITPATH="https://github.com/nknorg/nkn.git"
 RELEASES_PATH="https://github.com/nknorg/nkn/releases/download"
 DIR_NAME="linux-amd64"
-exec {DIR_LIST}<dir.list
-exec {START_SCRIPT}<nknstart.sh
 CURRENTDIR=${PWD}
 cd ..
 HOMEDIR=${PWD}
 cd $CURRENTDIR
+exec {DIR_LIST}<$CURRENTDIR/dir.list
+exec {START_SCRIPT}<$CURRENTDIR/nknstart.sh
+
 if [ -d nkn ]; then
   cd nkn
   git fetch
