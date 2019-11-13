@@ -30,6 +30,7 @@ MAG='\e[1;35m'
 
 function Copy_Bin(){
         echo -e "${YELLOW}Copy bin files...${NC}"
+        if [ ! -d $CURRENTDIR/$NODEDIR$INDEX ]; then mkdir $CURRENTDIR/$NODEDIR$INDEX; fi
         cp $HOMEFOLDER/nkn/nknd $CURRENTDIR/$NODEDIR$INDEX/.
         cp $HOMEFOLDER/nkn/nknc $CURRENTDIR/$NODEDIR$INDEX/.
 }
