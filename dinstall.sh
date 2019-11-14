@@ -178,7 +178,7 @@ echo -e "${YELLOW}"
 echo -e "${NC}"
 cd $HOMEFOLDER
 echo -e -n "${CYAN}Send $IDTXFEE satoshi to this address and press <ENTER>${NC}"; read
-echo -e "${GREEN}Create a startup script...${NC}"
+echo -e "${GREEN}Writing a startup script...${NC}"
 echo -e "docker run -d -p $IP_ADDRESS:30001-30003:30001-30003 -v $CURRENTDIR/$NODEDIR$INDEX:/nkn --name $NODEDIR$INDEX -w /nkn --rm -it nknorg/nkn /nkn/nknd -p $WPASSWORD" >> $START_SCRIPT
 #echo -e $IP_ADDRESS >> $IP_LIST
 echo -e $NODEDIR$INDEX >> $DIR_LIST
