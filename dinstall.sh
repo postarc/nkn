@@ -182,6 +182,7 @@ echo -e "${GREEN}Create a startup script...${NC}"
 echo -e "docker run -d -p $IP_ADDRESS:30001-30003:30001-30003 -v $CURRENTDIR/$NODEDIR$INDEX:/nkn --name $NODEDIR$INDEX -w /nkn --rm -it nknorg/nkn /nkn/nknd -p $WPASSWORD" >> $START_SCRIPT
 #echo -e $IP_ADDRESS >> $IP_LIST
 echo -e $NODEDIR$INDEX >> $DIR_LIST
+((INDEX++))
 echo -e -n "Do you want to set up another docker container?[Y,n]:"; read -e ANSWER
 done
 echo -e "${YELLOW}Write crontab...${NC}"
