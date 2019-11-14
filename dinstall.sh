@@ -38,7 +38,7 @@ function Copy_Bin(){
 function Config_Create(){
 echo -n -e "${YELLOW}Input Your BeneficiaryAddr[$ADDRESS]:${NC}"
 read -e ADDR
-if [ -n $ADDR ]; then ADDRESS=$ADDR; fi
+if [ ! -z $ADDR ]; then ADDRESS=$ADDR; fi
 echo -n -e "${YELLOW}Input Your RegisterIDTxnFee in sat[1]:${NC}"
 read -e IDTXFEE
 if [[ ! ${IDTXFEE} =~ ^[0-9]+$ ]] ; then IDTXFEE=1 ; fi
@@ -105,7 +105,7 @@ if [ -f $CURRENTDIR/$NODEDIR$INDEX/$FWALLET ] ; then
         echo -e "${RED}Wallet already exist!${NC}"
         echo -n -e "${YELLOW}Input your wallet password[$WPASSWORD]:${NC}"
         read -e WPASS
-        if [ -n $WPASS ]; then WPASSWORD=$WPASS; fi
+        if [ ! -z $WPASS ]; then WPASSWORD=$WPASS; fi
         else
         cd $CURRENTDIR/$NODEDIR$INDEX
         echo -e "${YELLOW}Create new wallet...${NC}"
@@ -169,7 +169,7 @@ Copy_Bin
 Config_Create
 Create_Wallet
 echo -e -n "${MAG}Input IP address[$IP_ADDRESS]:${NC}"; read -e IP_ADDR
-if [ -n $IP_ADDR ]; then IP_ADDRESS=$IP_ADDR; fi
+if [ ! -z $IP_ADDR ]; then IP_ADDRESS=$IP_ADDR; fi
 if [ -d 'ChainDB' ]; then cp -r ChainDB $CURRENTDIR/$NODEDIR$INDEX/; fi
 cd $CURRENTDIR/$NODEDIR$INDEX
 echo -e "${YELLOW}"
