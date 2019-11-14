@@ -29,10 +29,14 @@ MAG='\e[1;35m'
 
 
 function Copy_Bin(){
-        echo -e "${CYAN}Copy bin files...${NC}"
-        if [ ! -d $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX) ]; then mkdir $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX); fi
-        cp $HOMEFOLDER/nkn/nknd $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)/.
-        cp $HOMEFOLDER/nkn/nknc $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)/.
+   echo -e "${CYAN}Copy bin files...${NC}"
+   if [ ! -d $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX) ]; then mkdir $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX); fi
+   cp $HOMEFOLDER/nkn/nknd $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)/.
+   cp $HOMEFOLDER/nkn/nknc $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)/.
+   if [ -e $HOMEFOLDER/ChainDB ]; then
+        echo -e ${CYAN}Copy ChainDB...${NC}"
+        cp -r $HOMEFOLDER/ChainDB $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)
+   fi
 }
 
 function Config_Create(){
@@ -225,8 +229,9 @@ echo  '   if [ $? -ne 0 ]; then $START_COM ; fi' >> dockercheck.sh
 echo  'done' >> dockercheck.sh
 
 chmod +x $HOMEFOLDER/*.sh
+rm -rf $HOMEFOLDER/ChainDB
+rm -rf $CURRENTDIR/nkn
 cd $CURRENTDIR
-rm -rf nkn
 echo -e -n "${YELLOW}Do you want to start docker containers[${PURPLE}Y,n${YELLOW}]?:${NC}"
 read ANSWER
 if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
