@@ -223,7 +223,7 @@ echo  'done' >> dockercheck.sh
 chmod +x $HOMEFOLDER/*.sh
 cd $CURRENTDIR
 rm -rf nkn
-echo -e "${CYAN}Do you want to start docker container[Y,n]?:"
+echo -e -n "${CYAN}Do you want to start docker container[Y,n]?:"
 read ANSWER
 if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
 bash $HOMEFOLDER/$START_SCRIPT
