@@ -34,7 +34,7 @@ function Copy_Bin(){
    cp $HOMEFOLDER/nkn/nknd $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)/.
    cp $HOMEFOLDER/nkn/nknc $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)/.
    if [ -e $HOMEFOLDER/ChainDB ]; then
-        echo -e ${CYAN}Copy ChainDB...${NC}"
+        echo -e "${CYAN}Copy ChainDB...${NC}"
         cp -r $HOMEFOLDER/ChainDB $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)
    fi
 }
