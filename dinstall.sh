@@ -108,7 +108,7 @@ if [ -f $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)/$FWALLET ] ; then
         if [ ! -z $WPASS ]; then WPASSWORD=$WPASS; fi
         else
         cd $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)
-        echo -e "${YELLOW}Create new wallet...${NC}"
+        echo -e "${CYAN}Create new wallet...${NC}"
         echo -n -e "${YELLOW}Input your wallet password[$WPASSWORD]:${NC}"
         read -e WPASS
         if [ ! -z $WPASS ]; then WPASSWORD=$WPASS; fi
@@ -142,10 +142,10 @@ LATEST_TAG=$(git tag --sort=-creatordate | head -1)
 if [ -f nknd ]; then
         echo -e "${RED}Bin files exist!${NC}"
         else
-        echo -e "${YELLOW}Downloading bin files...${NC}"
+        echo -e "${BLUE}Downloading bin files...${NC}"
         wget "$RELEASES_PATH/$LATEST_TAG/$DIR_NAME.zip"
         if [ -f $DIR_NAME.zip ]; then
-                echo -e "${YELLOW}Unzipping bin files...${NC}"
+                echo -e "${MAG}Unzipping bin files...${NC}"
                 unzip $DIR_NAME.zip >/dev/null 2>&1
                 chmod +x $DIR_NAME/nkn*
                 cp $DIR_NAME/nkn* .
@@ -157,10 +157,13 @@ if [ -f nknd ]; then
                  fi
         fi
 fi
-read -e -p "Do you want to download bootstrap file? [Y,n]: " ANSWER
+echo -e -n "${YELLOW}Do you want to download bootstrap file? [Y,n]:${NC}"
+read ANSWER
 if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
         cd $HOMEFOLDER
+        echo -e "${BLUE}Downloading straps...${NC}"
         wget https://nkn.org/ChainDB_pruned_latest.zip
+        echo -e "${MAG}Unzipping straps...${NC}"
         unzip ChainDB_pruned_latest.zip | tr '\n' '\r'
         rm -rf ChainDB_pruned_latest.zip
 fi
@@ -170,30 +173,29 @@ do
 Copy_Bin
 Config_Create
 Create_Wallet
-echo -e -n "${MAG}Input IP address[$IP_ADDRESS]:${NC}"; read -e IP_ADDR
+echo -e -n "${YELLOW}Input IP address[$IP_ADDRESS]:${NC}"; read -e IP_ADDR
 if [ ! -z $IP_ADDR ]; then IP_ADDRESS=$IP_ADDR; fi
 if [ -d 'ChainDB' ]; then cp -r ChainDB $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)/; fi
 cd $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)
-echo -e "${YELLOW}"
+echo -e "${GREEN}"
 ./nknc wallet -l account -p $WPASSWORD
 echo -e "${NC}"
 cd $HOMEFOLDER
-echo -e -n "${CYAN}Send $IDTXFEE satoshi to this address and press <ENTER>${NC}"; read
-echo -e "${GREEN}Writing a startup script...${NC}"
+echo -e -n "${YELLOW}Send $IDTXFEE satoshi to this address and press <ENTER>:${NC}"; read
+echo -e "${CYAN}Writing a startup script...${NC}"
 echo -e "docker run -d -p $IP_ADDRESS:30001-30003:30001-30003 -v $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX):/nkn --name $NODEDIR$(printf "%0*d\n" 3 $INDEX) -w /nkn --rm -it nknorg/nkn /nkn/nknd -p $WPASSWORD" >> $START_SCRIPT
-#echo -e $IP_ADDRESS >> $IP_LIST
 echo -e $NODEDIR$(printf "%0*d\n" 3 $INDEX) >> $DIR_LIST
 ((INDEX++))
 echo -e -n "Do you want to set up another docker container?[Y,n]:"; read -e ANSWER
 done
-echo -e "${YELLOW}Write crontab...${NC}"
+echo -e "${CYAN}Write crontab...${NC}"
 sudo crontab -l -u root > cron
 if ! cat cron | grep "$HOMEFOLDER/$START_SCRIPT"; then echo -e "@reboot bash $HOMEFOLDER/$START_SCRIPT" >> cron; fi
 if ! cat cron | grep "$HOMEFOLDER/dockercheck.sh"; then echo -e "0 */2 * * * cd $HOMEFOLDER && bash $HOMEFOLDER/dockercheck.sh >/dev/null 2>&1" >> cron; fi
 sudo crontab -u root cron
 rm cron
 
-echo -e "${MAG}Creating checking script...${NC}"
+echo -e "${CYAN}Creating checking script...${NC}"
 echo  '#!/bin/bash' > dockercheck.sh
 echo -e "cd $HOMEFOLDER" >> dockercheck.sh
 echo  'exec {DIR_LIST}<dir.list' >> dockercheck.sh
@@ -223,7 +225,7 @@ echo  'done' >> dockercheck.sh
 chmod +x $HOMEFOLDER/*.sh
 cd $CURRENTDIR
 rm -rf nkn
-echo -e -n "${CYAN}Do you want to start docker container[Y,n]?:"
+echo -e -n "${YELLOW}Do you want to start docker container[Y,n]?:"
 read ANSWER
 if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
 bash $HOMEFOLDER/$START_SCRIPT
