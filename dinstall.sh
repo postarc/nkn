@@ -44,7 +44,7 @@ read -e IDTXFEE
 if [[ ! ${IDTXFEE} =~ ^[0-9]+$ ]] ; then IDTXFEE=1 ; fi
 echo
 if [ -f $FCONFIG ]; then rm $FCONFIG ; fi
-cat << EOF > $CURRENTDIR/$NODEDIR$INDEX/$FCONFIG
+cat << EOF > $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)/$FCONFIG
 {
   "BeneficiaryAddr": "$ADDRESS",
   "RegisterIDTxnFee": $IDTXFEE,
