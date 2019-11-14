@@ -41,7 +41,7 @@ read -e ADDR
 if [ ! -z $ADDR ]; then ADDRESS=$ADDR; fi
 echo -n -e "${YELLOW}Input Your RegisterIDTxnFee in sat[$IDTXFEE]:${NC}"
 read -e IDTXFE
-if [ ! -z $ IDTXFE]; then IDTXFEE=$IDTXFE; fi
+if [ ! -z $ IDTXFE ]; then IDTXFEE=$IDTXFE; fi
 if [[ ! ${IDTXFEE} =~ ^[0-9]+$ ]] ; then IDTXFEE=1 ; fi
 if [ -f $FCONFIG ]; then rm $FCONFIG ; fi
 cat << EOF > $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)/$FCONFIG
