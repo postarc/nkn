@@ -109,8 +109,9 @@ if [ -f $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)/$FWALLET ] ; then
         else
         cd $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)
         echo -e "${YELLOW}Create new wallet...${NC}"
-        echo -n -e "${YELLOW}Input your wallet password:${NC}"
-        read -e WPASSWORD
+        echo -n -e "${YELLOW}Input your wallet password[$WPASSWORD]:${NC}"
+        read -e WPASS
+        if [ ! -z $WPASS ]; then WPASSWORD=$WPASS; fi
         ./nknc wallet -c -p $WPASSWORD
         cd $HOMEFOLDER
 fi
