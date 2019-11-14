@@ -192,6 +192,7 @@ if ! cat cron | grep "$HOMEFOLDER/dockercheck.sh"; then echo -e "0 */2 * * * cd 
 sudo crontab -u root cron
 rm cron
 
+echo -e "${MAG}Creating checking script...${NC}"
 echo  '#!/bin/bash' > dockercheck.sh
 echo -e "cd $HOMEFOLDER" >> dockercheck.sh
 echo  'exec {DIR_LIST}<dir.list' >> dockercheck.sh
@@ -221,3 +222,10 @@ echo  'done' >> dockercheck.sh
 chmod +x $HOMEFOLDER/*.sh
 cd $CURRENTDIR
 rm -rf nkn
+echo -e "${CYAN}Do you want to start docker container[Y,n]?:"
+read ANSWER
+if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
+bash $HOMEFOLDER/$START_SCRIPT
+fi
+echo -e "${GREEN}All Done!${NC}"
+
