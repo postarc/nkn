@@ -151,7 +151,7 @@ if [ -f nknd ]; then
                 cp $DIR_NAME/nkn* .
                 rm -rf $DIR_NAME.zip $DIR_NAME
         else
-                echo -e -n "${YELLOW}Bin files not found. Do you want to compile? [${PURPLE}Y,n${YELLOW]]:${NC}"
+                echo -e -n "${YELLOW}Bin files not found. Do you want to compile? [${PURPLE}Y,n${YELLOW}]:${NC}"
                 read  ANSWER
                 if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
                         make
