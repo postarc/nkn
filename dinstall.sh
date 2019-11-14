@@ -158,7 +158,7 @@ if [ -f nknd ]; then
                  fi
         fi
 fi
-echo -e -n "${YELLOW}Do you want to download bootstrap file? [${PURPLE}Y,n${YELLOW]:${NC}"
+echo -e -n "${YELLOW}Do you want to download bootstrap file? [${PURPLE}Y,n${YELLOW}]:${NC}"
 read ANSWER
 if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
         cd $HOMEFOLDER
