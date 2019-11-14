@@ -30,9 +30,9 @@ MAG='\e[1;35m'
 
 function Copy_Bin(){
         echo -e "${YELLOW}Copy bin files...${NC}"
-        if [ ! -d $CURRENTDIR/$NODEDIR$INDEX ]; then mkdir $CURRENTDIR/$NODEDIR$INDEX; fi
-        cp $HOMEFOLDER/nkn/nknd $CURRENTDIR/$NODEDIR$INDEX/.
-        cp $HOMEFOLDER/nkn/nknc $CURRENTDIR/$NODEDIR$INDEX/.
+        if [ ! -d $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX) ]; then mkdir $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX); fi
+        cp $HOMEFOLDER/nkn/nknd $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)/.
+        cp $HOMEFOLDER/nkn/nknc $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)/.
 }
 
 function Config_Create(){
@@ -101,13 +101,13 @@ EOF
 }
 
 function Create_Wallet(){
-if [ -f $CURRENTDIR/$NODEDIR$INDEX/$FWALLET ] ; then
+if [ -f $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)/$FWALLET ] ; then
         echo -e "${RED}Wallet already exist!${NC}"
         echo -n -e "${YELLOW}Input your wallet password[$WPASSWORD]:${NC}"
         read -e WPASS
         if [ ! -z $WPASS ]; then WPASSWORD=$WPASS; fi
         else
-        cd $CURRENTDIR/$NODEDIR$INDEX
+        cd $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)
         echo -e "${YELLOW}Create new wallet...${NC}"
         echo -n -e "${YELLOW}Input your wallet password:${NC}"
         read -e WPASSWORD
@@ -171,17 +171,17 @@ Config_Create
 Create_Wallet
 echo -e -n "${MAG}Input IP address[$IP_ADDRESS]:${NC}"; read -e IP_ADDR
 if [ ! -z $IP_ADDR ]; then IP_ADDRESS=$IP_ADDR; fi
-if [ -d 'ChainDB' ]; then cp -r ChainDB $CURRENTDIR/$NODEDIR$INDEX/; fi
-cd $CURRENTDIR/$NODEDIR$INDEX
+if [ -d 'ChainDB' ]; then cp -r ChainDB $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)/; fi
+cd $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)
 echo -e "${YELLOW}"
 ./nknc wallet -l account -p $WPASSWORD
 echo -e "${NC}"
 cd $HOMEFOLDER
 echo -e -n "${CYAN}Send $IDTXFEE satoshi to this address and press <ENTER>${NC}"; read
 echo -e "${GREEN}Writing a startup script...${NC}"
-echo -e "docker run -d -p $IP_ADDRESS:30001-30003:30001-30003 -v $CURRENTDIR/$NODEDIR$INDEX:/nkn --name $NODEDIR$INDEX -w /nkn --rm -it nknorg/nkn /nkn/nknd -p $WPASSWORD" >> $START_SCRIPT
+echo -e "docker run -d -p $IP_ADDRESS:30001-30003:30001-30003 -v $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX):/nkn --name $NODEDIR$(printf "%0*d\n" 3 $INDEX) -w /nkn --rm -it nknorg/nkn /nkn/nknd -p $WPASSWORD" >> $START_SCRIPT
 #echo -e $IP_ADDRESS >> $IP_LIST
-echo -e $NODEDIR$INDEX >> $DIR_LIST
+echo -e $NODEDIR$(printf "%0*d\n" 3 $INDEX) >> $DIR_LIST
 ((INDEX++))
 echo -e -n "Do you want to set up another docker container?[Y,n]:"; read -e ANSWER
 done
