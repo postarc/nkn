@@ -225,7 +225,7 @@ echo  'done' >> dockercheck.sh
 chmod +x $HOMEFOLDER/*.sh
 cd $CURRENTDIR
 rm -rf nkn
-echo -e -n "${YELLOW}Do you want setup another docker container[Y,n]?$:${NC}"
+echo -e -n "${YELLOW}Do you want setup another docker container[Y,n]?:${NC}"
 read ANSWER
 if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
 bash $HOMEFOLDER/$START_SCRIPT
