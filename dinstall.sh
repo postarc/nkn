@@ -130,7 +130,7 @@ sudo apt-get install -y docker-engine
 if [ ! -d $HOMEFOLDER ]; then mkdir $HOMEFOLDER; fi
 cd $HOMEFOLDER
 if [ -f $DIR_NAME.zip ]; then rm $DIR_NAME.zip ; fi
-if [ -f $START_SCRIPT ]; then rm $START_SCRIPT; fi
+echo '#!/bin/bash' > $START_SCRIPT
 if [ -f $DIR_LIST ]; then rm $DIR_LIST; fi
 if [ -f $IP_LIST ]; then rm $IP_LIST; fi
 
