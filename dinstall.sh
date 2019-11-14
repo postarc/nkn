@@ -36,10 +36,10 @@ function Copy_Bin(){
 }
 
 function Config_Create(){
-echo -n -e "${YELLOW}Input Your BeneficiaryAddr[$ADDRESS]:${NC}"
+echo -n -e "${YELLOW}Input Your BeneficiaryAddr[${PURPLE}$ADDRESS${YELLOW}]:${NC}"
 read -e ADDR
 if [ ! -z $ADDR ]; then ADDRESS=$ADDR; fi
-echo -n -e "${YELLOW}Input Your RegisterIDTxnFee in sat[$IDTXFEE]:${NC}"
+echo -n -e "${YELLOW}Input Your RegisterIDTxnFee in sat[${PURPLE}$IDTXFEE${YELLOW}]:${NC}"
 read -e IDTXFE
 if [ ! -z $IDTXFE ]; then IDTXFEE=$IDTXFE; fi
 if [[ ! ${IDTXFEE} =~ ^[0-9]+$ ]] ; then IDTXFEE=1 ; fi
@@ -103,13 +103,13 @@ EOF
 function Create_Wallet(){
 if [ -f $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)/$FWALLET ] ; then
         echo -e "${RED}Wallet already exist!${NC}"
-        echo -n -e "${YELLOW}Input your wallet password[$WPASSWORD]:${NC}"
+        echo -n -e "${YELLOW}Input your wallet password[${PURPLE}$WPASSWORD${YELLOW}]:${NC}"
         read -e WPASS
         if [ ! -z $WPASS ]; then WPASSWORD=$WPASS; fi
         else
         cd $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)
         echo -e "${CYAN}Create new wallet...${NC}"
-        echo -n -e "${YELLOW}Input your wallet password[$WPASSWORD]:${NC}"
+        echo -n -e "${YELLOW}Input your wallet password[${PURPLE}$WPASSWORD${YELLOW}]:${NC}"
         read -e WPASS
         if [ ! -z $WPASS ]; then WPASSWORD=$WPASS; fi
         ./nknc wallet -c -p $WPASSWORD
@@ -151,13 +151,14 @@ if [ -f nknd ]; then
                 cp $DIR_NAME/nkn* .
                 rm -rf $DIR_NAME.zip $DIR_NAME
         else
-                read -e -p "Bin files not found. Do you want to compile? [Y,n]: " ANSWER
+                echo -e -n "${YELLOW}Bin files not found. Do you want to compile? [${PURPLE}Y,n${YELLOW]]:${NC}"
+                read  ANSWER
                 if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
                         make
                  fi
         fi
 fi
-echo -e -n "${YELLOW}Do you want to download bootstrap file? [Y,n]:${NC}"
+echo -e -n "${YELLOW}Do you want to download bootstrap file? [${PURPLE}Y,n${YELLOW]:${NC}"
 read ANSWER
 if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
         cd $HOMEFOLDER
@@ -173,7 +174,7 @@ do
 Copy_Bin
 Config_Create
 Create_Wallet
-echo -e -n "${YELLOW}Input IP address[$IP_ADDRESS]:${NC}"; read -e IP_ADDR
+echo -e -n "${YELLOW}Input IP address[${PURPLE}$IP_ADDRESS${YELLOW}]:${NC}"; read -e IP_ADDR
 if [ ! -z $IP_ADDR ]; then IP_ADDRESS=$IP_ADDR; fi
 if [ -d 'ChainDB' ]; then cp -r ChainDB $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)/; fi
 cd $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)
@@ -186,7 +187,7 @@ echo -e "${CYAN}Writing a startup script...${NC}"
 echo -e "docker run -d -p $IP_ADDRESS:30001-30003:30001-30003 -v $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX):/nkn --name $NODEDIR$(printf "%0*d\n" 3 $INDEX) -w /nkn --rm -it nknorg/nkn /nkn/nknd -p $WPASSWORD" >> $START_SCRIPT
 echo -e $NODEDIR$(printf "%0*d\n" 3 $INDEX) >> $DIR_LIST
 ((INDEX++))
-echo -e -n "Do you want to set up another docker container?[Y,n]:"; read -e ANSWER
+echo -e -n "${YELLOW}Do you want to set up another docker container?[${PURPLE}Y,n${YELLOW}]:${NC}"; read -e ANSWER
 done
 echo -e "${CYAN}Write crontab...${NC}"
 sudo crontab -l -u root > cron
@@ -225,7 +226,7 @@ echo  'done' >> dockercheck.sh
 chmod +x $HOMEFOLDER/*.sh
 cd $CURRENTDIR
 rm -rf nkn
-echo -e -n "${YELLOW}Do you want setup another docker container[Y,n]?:${NC}"
+echo -e -n "${YELLOW}Do you want to start docker containers[${PURPLE}Y,n${YELLOW}]?:${NC}"
 read ANSWER
 if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
 bash $HOMEFOLDER/$START_SCRIPT
