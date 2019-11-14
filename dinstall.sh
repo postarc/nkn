@@ -162,7 +162,7 @@ if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
         rm -rf ChainDB_pruned_latest.zip
 fi
 ANSWER="y"
-while [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]
+while [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ] 
 do
 Copy_Bin
 Config_Create
