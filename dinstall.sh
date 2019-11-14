@@ -162,11 +162,12 @@ echo -e -n "${YELLOW}Do you want to download bootstrap file? [${PURPLE}Y,n${YELL
 read ANSWER
 if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
         cd $HOMEFOLDER
+        if [ -f ChainDB_pruned_latest.zip ]; rm -f ChainDB_pruned_latest.zip; fi
         echo -e "${BLUE}Downloading straps...${NC}"
         wget https://nkn.org/ChainDB_pruned_latest.zip
         echo -e "${MAG}Unzipping straps...${NC}"
         unzip ChainDB_pruned_latest.zip | tr '\n' '\r'
-        rm -rf ChainDB_pruned_latest.zip
+        rm -f ChainDB_pruned_latest.zip
 fi
 ANSWER="y"
 while [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ] 
