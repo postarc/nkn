@@ -103,8 +103,9 @@ EOF
 function Create_Wallet(){
 if [ -f $CURRENTDIR/$NODEDIR$INDEX/$FWALLET ] ; then
         echo -e "${RED}Wallet already exist!${NC}"
-        echo -n -e "${YELLOW}Input your wallet password:${NC}"
-        read -e WPASSWORD
+        echo -n -e "${YELLOW}Input your wallet password[$WPASSWORD]:${NC}"
+        read -e WPASS
+        if [ -n $WPASS ]; then WPASSWORD=$WPASS; fi
         else
         cd $CURRENTDIR/$NODEDIR$INDEX
         echo -e "${YELLOW}Create new wallet...${NC}"
