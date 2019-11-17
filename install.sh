@@ -44,17 +44,18 @@ if [ -f $DIR_NAME.zip ]; then rm $DIR_NAME.zip ; fi
 if [ -f nknd ]; then
         echo -e "${RED}Bin files exist!${NC}"
         else
-        echo -e "${YELLOW}Downloading bin files...${NC}"
+        echo -e "${CYAN}Downloading bin files...${NC}"
         wget "$RELEASES_PATH/$LATEST_TAG/$DIR_NAME.zip"
         if [ -f $DIR_NAME.zip ]; then 
-                echo -e "${YELLOW}Unzipping bin files...${NC}"
+                echo -e "${MAG}Unzipping bin files...${NC}"
                 unzip $DIR_NAME.zip >/dev/null 2>&1
-                echo -e "${YELLOW}Moving bin files...${NC}"
+                echo -e "${BLUE}Moving bin files...${NC}"
                 mv $DIR_NAME/nkn* .
                 rm -rf $DIR_NAME
                 rm $DIR_NAME.zip
         else
-                read -e -p "Bin files not found. Do you want to compile? [Y,n]: " ANSWER
+                echo -e "${YELLOW}Bin files not found. Do you want to compile? [Y,n]:${NC}"
+                read -e ANSWER
                 if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
                         sudo add-apt-repository -y ppa:longsleep/golang-backports
                         sudo apt-get update
@@ -134,13 +135,13 @@ if [ -f $FWALLET ] ; then
         echo -n -e "${YELLOW}Input your wallet password:${NC}"
         read -e WPASSWORD        
         else
-        echo -e "${YELLOW}Create new wallet...${NC}"
+        echo -e "${CYAN}Create new wallet...${NC}"
         echo -n -e "${YELLOW}Input your wallet password:${NC}"
         read -e WPASSWORD
         ./nknc wallet -c -p $WPASSWORD
         fi
 sleep 2
-echo -e "${YELLOW}Creating nkn service...${NC}"
+echo -e "${CYAN}Creating nkn service...${NC}"
 
 echo "[Unit]" > nkn.service
 echo "Description=nkn" >> nkn.service
@@ -159,17 +160,13 @@ sudo systemctl enable nkn.service
 
 rm nkn.service
 
-#echo -e "${YELLOW}Writing new crontab...${NC}"
-#if ! crontab -l | grep "/nknd -p"; then
-#  (crontab -l ; echo "@reboot $HOMEFOLDER/nknd -p $WPASSWORD") | crontab -
-#fi
-
-echo -e "${YELLOW}firewall setup...${NC}"
+echo -e "${CYAN}firewall setup...${NC}"
 sudo ufw allow 30001/tcp
 sudo ufw allow 30002/tcp
 sudo ufw allow 30003/tcp
 
-read -e -p "Do you want to download bootstrap file? [Y,n]: " ANSWER
+echo -e "${YELLOW}Do you want to download bootstrap file? [Y,n]: ${NC}"
+read -e ANSWER
 if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
         cd $HOMEFOLDER
         wget https://nkn.org/ChainDB_pruned_latest.zip
@@ -177,10 +174,10 @@ if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
         rm -rf ChainDB_pruned_latest.zip
 fi       
 
-echo -e "${GREEN}Starting nkn service...${NC}"
+echo -e "${CYAN}Starting nkn service...${NC}"
 sudo systemctl start nkn.service
 echo
-echo -e "${YELLOW}"
+echo -e "${GREEN}"
 ./nknc wallet -l account -p $WPASSWORD
 echo -e "${NC}"
 echo -e "${MAG}Nkn node control:${NC}"
@@ -189,7 +186,7 @@ echo -e "${CYAN}Stop nkn node: ${BLUE}sudo systemctl stop nkn.service${NC}"
 echo -e "${CYAN}Enabe nkn service: ${BLUE}sudo systemctl enable nkn.service${NC}"
 echo -e "${CYAN}Disable nkn service: ${BLUE}sudo systemctl disable nkn.service${NC}"
 echo -e "${CYAN}Status nkn node: ${BLUE}sudo systemctl status nkn.service${NC}"
-echo -e "${YELLOW}or use command ./nknc info --state for statistics${NC}"
+echo -e "${BLUE}or use command ./nknc info --state for statistics${NC}"
 echo -e "${CYAN}For nkn.service file editing: ${BLUE}sudo nano /etc/systemd/system/nkn.service${NC}"
 echo -e "${CYAN}After editing nkn.service file: ${BLUE}sudo systemctl daemon-reload${NC}"
 
