@@ -138,7 +138,11 @@ if [ -f $FWALLET ] ; then
         echo -e "${CYAN}Create new wallet...${NC}"
         echo -n -e "${YELLOW}Input your wallet password:${NC}"
         read -e WPASSWORD
+        echo -e "${GREEN}"
         ./nknc wallet -c -p $WPASSWORD
+        echo -e "${NC}"
+        echo -n -e "${YELLOW}Send $IDTXFEE sat nkn to address and press <ENTER>${NC}"
+        read -e ANSWER
         fi
 sleep 2
 echo -e "${CYAN}Creating nkn service...${NC}"
@@ -177,9 +181,9 @@ fi
 echo -e "${CYAN}Starting nkn service...${NC}"
 sudo systemctl start nkn.service
 echo
-echo -e "${GREEN}"
-./nknc wallet -l account -p $WPASSWORD
-echo -e "${NC}"
+#echo -e "${GREEN}"
+#./nknc wallet -l account -p $WPASSWORD
+#echo -e "${NC}"
 echo -e "${MAG}Nkn node control:${NC}"
 echo -e "${CYAN}Start nkn node: ${BLUE}sudo systemctl start nkn.service${NC}"
 echo -e "${CYAN}Stop nkn node: ${BLUE}sudo systemctl stop nkn.service${NC}"
