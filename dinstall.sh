@@ -36,8 +36,8 @@ function Copy_Bin(){
    if [ -e $HOMEFOLDER/ChainDB ]; then
         echo -e "${CYAN}Copy ChainDB...${NC}"
         rsync --progress -r $HOMEFOLDER/ChainDB $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX) | tr '\n' '\r'
+        echo
    fi
-   echo
 }
 
 function Config_Create(){
