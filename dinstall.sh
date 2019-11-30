@@ -190,11 +190,13 @@ if [ -e $HOMEFOLDER/ChainDB ]; then
 else 
    echo -e -n "${YELLOW}Do you want to download bootstrap file? [${PURPLE}Y,n${YELLOW}]:${NC}"
    read ANSWER
-   echo -e "${BLUE}Downloading straps...${NC}"
-   wget https://nkn.org/ChainDB_pruned_latest.zip
-   echo -e "${MAG}Unzipping straps...${NC}"
-   unzip ChainDB_pruned_latest.zip | tr '\n' '\r'
-   rm -f ChainDB_pruned_latest.zip  
+   if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
+      echo -e "${BLUE}Downloading straps...${NC}"
+      wget https://nkn.org/ChainDB_pruned_latest.zip
+      echo -e "${MAG}Unzipping straps...${NC}"
+      unzip ChainDB_pruned_latest.zip | tr '\n' '\r'
+      rm -f ChainDB_pruned_latest.zip
+    fi
 fi
 
 ANSWER="y"
@@ -252,7 +254,7 @@ echo  '   if [ $? -ne 0 ]; then $START_COM ; fi' >> dockercheck.sh
 echo  'done' >> dockercheck.sh
 
 chmod +x $HOMEFOLDER/*.sh
-rm -rf $HOMEFOLDER/ChainDB
+#rm -rf $HOMEFOLDER/ChainDB
 rm -rf $CURRENTDIR/nkn
 cd $CURRENTDIR
 echo -e -n "${YELLOW}Do you want to start docker containers[${PURPLE}Y,n${YELLOW}]?:${NC}"
