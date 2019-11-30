@@ -35,7 +35,7 @@ function Copy_Bin(){
    cp $HOMEFOLDER/nkn/nknc $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)/.
    if [ -e $HOMEFOLDER/ChainDB ]; then
         if [ -e $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)/ChainDB ]; then
-         echo echo -n -e "${RED}ChainDB folder exist. Do you want to overwrite[${PURPLE}Y;n${RED}]:${NC}"
+         echo -n -e "${RED}ChainDB folder exist. Do you want to overwrite[${PURPLE}Y;n${RED}]:${NC}"
          read ANSWER;
          if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
            echo -e "${CYAN}Copy ChainDB...${NC}"
