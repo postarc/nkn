@@ -44,6 +44,7 @@ function Copy_Bin(){
          else 
            echo -e "${CYAN}Skip ChainDB copying...${NC}"
          fi
+         fi
    fi
 }
 
