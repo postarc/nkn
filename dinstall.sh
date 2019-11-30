@@ -183,7 +183,7 @@ if [ -e $HOMEFOLDER/ChainDB ]; then
    if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
       echo -e "${BLUE}Downloading straps...${NC}"
       wget https://nkn.org/ChainDB_pruned_latest.zip
-      echo -e "${MAG}Unzipping straps...${NC}"
+      echo -e "${MAG}Unzipping ChainDB...${NC}"
       unzip ChainDB_pruned_latest.zip | tr '\n' '\r'
       rm -f ChainDB_pruned_latest.zip
       fi
@@ -193,7 +193,7 @@ else
    if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
       echo -e "${BLUE}Downloading straps...${NC}"
       wget https://nkn.org/ChainDB_pruned_latest.zip
-      echo -e "${MAG}Unzipping straps...${NC}"
+      echo -e "${MAG}Unzipping ChainDB...${NC}"
       unzip ChainDB_pruned_latest.zip | tr '\n' '\r'
       rm -f ChainDB_pruned_latest.zip
     fi
