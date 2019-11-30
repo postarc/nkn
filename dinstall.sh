@@ -179,8 +179,8 @@ if [ -e ChainDB_pruned_latest.zip ];then rm -f ChainDB_pruned_latest.zip; fi
 if [ -e $HOMEFOLDER/ChainDB ]; then
    echo -e -n "${YELLOW}Straps dir ChainDB exist. Download anyway?[${PURPLE}Y;n${YELLOW}]:${NC}"
    read ANSWER;
-   if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ ! $ANSWER = 'y' ]; then
-      echo -e "${BLUE}Downloading straps 1...${NC}"
+   if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
+      echo -e "${BLUE}Downloading straps...${NC}"
       wget https://nkn.org/ChainDB_pruned_latest.zip
       echo -e "${MAG}Unzipping straps...${NC}"
       unzip ChainDB_pruned_latest.zip | tr '\n' '\r'
@@ -189,7 +189,7 @@ if [ -e $HOMEFOLDER/ChainDB ]; then
 else 
    echo -e -n "${YELLOW}Do you want to download bootstrap file? [${PURPLE}Y,n${YELLOW}]:${NC}"
    read ANSWER
-   echo -e "${BLUE}Downloading straps 2...${NC}"
+   echo -e "${BLUE}Downloading straps...${NC}"
    wget https://nkn.org/ChainDB_pruned_latest.zip
    echo -e "${MAG}Unzipping straps...${NC}"
    unzip ChainDB_pruned_latest.zip | tr '\n' '\r'
