@@ -179,6 +179,7 @@ fi
 ANSWER="y"
 while [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ] 
 do
+echo -e "${PURPLE}Create node $NODEDIR$(printf "%0*d\n" 3 $INDEX)...${NC}"
 Copy_Bin
 Config_Create
 Create_Wallet
