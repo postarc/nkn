@@ -206,7 +206,7 @@ fi
 ANSWER="y"
 while [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ] 
 do
-echo -e "${GREEN}$NODEDIR$(printf "%0*d\n" 3 $INDEX) node setup...${NC}"
+echo -e "${GREEN}$NODEDIR$(printf "%0*d\n" 3 $INDEX) node setup:${NC}"
 Copy_Bin
 Config_Create
 Create_Wallet
