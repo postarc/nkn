@@ -44,11 +44,11 @@ function Copy_Bin(){
          else 
            echo -e "${CYAN}Skip ChainDB copying...${NC}"
          fi
-         fi
-     else
+         else
            echo -e "${CYAN}Copy ChainDB...${NC}"
            rsync --progress -r $HOMEFOLDER/ChainDB $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX) | tr '\n' '\r'
            echo
+         fi
      fi
 }
 
