@@ -129,6 +129,7 @@ if [ -f $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)/$FWALLET ] ; then
         ./nknc wallet -c -p $WPASSWORD
         echo -e "${NC}"
         cd $HOMEFOLDER
+        echo -e -n "${YELLOW}Send $IDTXFEE satoshi to this address and press <ENTER>:${NC}"; read
 fi
 }
 
@@ -203,7 +204,6 @@ echo -e "${PURPLE}Create node $NODEDIR$(printf "%0*d\n" 3 $INDEX)...${NC}"
 Copy_Bin
 Config_Create
 Create_Wallet
-echo -e -n "${YELLOW}Send $IDTXFEE satoshi to this address and press <ENTER>:${NC}"; read
 echo -e -n "${YELLOW}Input IP address[${PURPLE}$IP_ADDRESS${YELLOW}]:${NC}"; read -e IP_ADDR
 if [ ! -z $IP_ADDR ]; then IP_ADDRESS=$IP_ADDR; fi
 #if [ -d 'ChainDB' ]; then 
