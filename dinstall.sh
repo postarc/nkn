@@ -131,6 +131,7 @@ sudo apt-add-repository 'deb https://apt.dockerproject.org/repo ubuntu-xenial ma
 sudo apt-get update
 sudo apt-get install unzip -y
 sudo apt-get install -y golang-go
+sudo apt-get update
 sudo apt-get install -y docker-engine
 
 if [ ! -d $HOMEFOLDER ]; then mkdir $HOMEFOLDER; fi
