@@ -237,6 +237,7 @@ echo  'exec {DIR_LIST}<dir.list' >> dockercheck.sh
 echo  'exec {START_SCRIPT}<nknstart.sh' >> dockercheck.sh
 echo  'if [ -d nkn ]; then cd nkn; git fetch; else git clone $GITPATH; cd nkn; fi' >> dockercheck.sh
 echo  'LATEST_TAG=$(git tag --sort=-creatordate | head -1)' >> dockercheck.sh
+echo  'read -r -u "$START_SCRIPT" START_COM'
 echo  'while read -r -u "$DIR_LIST" DOCKER_NAME && read -r -u "$START_SCRIPT" START_COM' >> dockercheck.sh
 echo  'do' >> dockercheck.sh
 echo  -n 'if [[ -z $(' >> dockercheck.sh
