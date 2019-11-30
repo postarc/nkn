@@ -116,7 +116,9 @@ if [ -f $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)/$FWALLET ] ; then
         echo -n -e "${YELLOW}Input your wallet password[${PURPLE}$WPASSWORD${YELLOW}]:${NC}"
         read -e WPASS
         if [ ! -z $WPASS ]; then WPASSWORD=$WPASS; fi
+        echo -e "${GREEN}"
         ./nknc wallet -c -p $WPASSWORD
+        echo -e "${NC}"
         cd $HOMEFOLDER
 fi
 }
@@ -179,15 +181,14 @@ do
 Copy_Bin
 Config_Create
 Create_Wallet
+echo -e -n "${YELLOW}Send $IDTXFEE satoshi to this address and press <ENTER>:${NC}"; read
 echo -e -n "${YELLOW}Input IP address[${PURPLE}$IP_ADDRESS${YELLOW}]:${NC}"; read -e IP_ADDR
 if [ ! -z $IP_ADDR ]; then IP_ADDRESS=$IP_ADDR; fi
-if [ -d 'ChainDB' ]; then cp -r ChainDB $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)/; fi
-cd $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)
-echo -e "${GREEN}"
-./nknc wallet -l account -p $WPASSWORD
-echo -e "${NC}"
+if [ -d 'ChainDB' ]; then 
+   echo -e "${CYAN}Copying strap files, please wait...${NC}"
+   cp -r ChainDB $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)/; fi
+#cd $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)
 cd $HOMEFOLDER
-echo -e -n "${YELLOW}Send $IDTXFEE satoshi to this address and press <ENTER>:${NC}"; read
 echo -e "${CYAN}Writing a startup script...${NC}"
 echo -e "docker run -d -p $IP_ADDRESS:30001-30003:30001-30003 -v $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX):/nkn --name $NODEDIR$(printf "%0*d\n" 3 $INDEX) -w /nkn --rm -it nknorg/nkn /nkn/nknd -p $WPASSWORD" >> $START_SCRIPT
 echo -e $NODEDIR$(printf "%0*d\n" 3 $INDEX) >> $DIR_LIST
