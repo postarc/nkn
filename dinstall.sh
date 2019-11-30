@@ -171,8 +171,13 @@ read ANSWER
 if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
         cd $HOMEFOLDER
         if [ -e ChainDB_pruned_latest.zip ];then rm -f ChainDB_pruned_latest.zip; fi
-        echo -e "${BLUE}Downloading straps...${NC}"
-        wget https://nkn.org/ChainDB_pruned_latest.zip
+        if [ [ -e $HOMEFOLDER/ChainDB ]; then
+         echo -e -n "${BLUE}Straps dir ChainDB exist. Download anyway?[${PURPLE}y;N${BLUE}]:${NC}"
+         read ANSWER;
+         if [ ! -z $ANSWER ] || [ ! $ANSWER = 'N' ] || [ ! $ANSWER = 'n' ]; then
+            echo -e "${BLUE}Downloading straps...${NC}"
+            wget https://nkn.org/ChainDB_pruned_latest.zip
+         fi
         echo -e "${MAG}Unzipping straps...${NC}"
         unzip ChainDB_pruned_latest.zip | tr '\n' '\r'
         rm -f ChainDB_pruned_latest.zip
