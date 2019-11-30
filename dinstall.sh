@@ -248,7 +248,8 @@ echo -e "rm $DIR_NAME.zip; fi" >> dockercheck.sh
 echo -e -n "  wget $RELEASES_PATH" >> dockercheck.sh
 echo  -n '/$LATEST_TAG/' >> dockercheck.sh
 echo  '$DIR_NAME.zip' >> dockercheck.sh
-echo -e "  if [ $? -ne 0 ]; then make; else unzip "$DIR_NAME.zip" >/dev/null 2>&1; mv $DIR_NAME/nkn* .; rm -rf $DIR_NAME $DIR_NAME.zip; fi" >> dockercheck.sh
+echo -n '  if [ $? -ne 0 ]; then make; '
+echo -e "else unzip "$DIR_NAME.zip" >/dev/null 2>&1; mv $DIR_NAME/nkn* .; rm -rf $DIR_NAME $DIR_NAME.zip; fi" >> dockercheck.sh
 echo  '  chmod +x nknd; chmod +x nknc' >> dockercheck.sh
 echo  '  cp nknd nknc ../../$DOCKER_NAME' >> dockercheck.sh
 echo  '  $START_COM' >> dockercheck.sh
