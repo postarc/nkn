@@ -174,23 +174,28 @@ if [ -f nknd ]; then
                  fi
         fi
 fi
-echo -e -n "${YELLOW}Do you want to download bootstrap file? [${PURPLE}Y,n${YELLOW}]:${NC}"
-read ANSWER
-if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
-        cd $HOMEFOLDER
-        if [ -e ChainDB_pruned_latest.zip ];then rm -f ChainDB_pruned_latest.zip; fi
-        if [ [ -e $HOMEFOLDER/ChainDB ]; then
-         echo -e -n "${BLUE}Straps dir ChainDB exist. Download anyway?[${PURPLE}y;N${BLUE}]:${NC}"
-         read ANSWER;
-         if [ ! -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ ! $ANSWER = 'y' ]; then
-            echo -e "${BLUE}Downloading straps...${NC}"
-            wget https://nkn.org/ChainDB_pruned_latest.zip
-            echo -e "${MAG}Unzipping straps...${NC}"
-            unzip ChainDB_pruned_latest.zip | tr '\n' '\r'
-            rm -f ChainDB_pruned_latest.zip
-         fi
-        fi
+
+if [ -e ChainDB_pruned_latest.zip ];then rm -f ChainDB_pruned_latest.zip; fi
+if [ [ -e $HOMEFOLDER/ChainDB ]; then
+   echo -e -n "${BLUE}Straps dir ChainDB exist. Download anyway?[${PURPLE}Y;n${BLUE}]:${NC}"
+   read ANSWER;
+   if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ ! $ANSWER = 'y' ]; then
+      echo -e "${BLUE}Downloading straps...${NC}"
+      wget https://nkn.org/ChainDB_pruned_latest.zip
+      echo -e "${MAG}Unzipping straps...${NC}"
+      unzip ChainDB_pruned_latest.zip | tr '\n' '\r'
+      rm -f ChainDB_pruned_latest.zip
+      fi
+else 
+   echo -e -n "${YELLOW}Do you want to download bootstrap file? [${PURPLE}Y,n${YELLOW}]:${NC}"
+   read ANSWER
+   echo -e "${BLUE}Downloading straps...${NC}"
+   wget https://nkn.org/ChainDB_pruned_latest.zip
+   echo -e "${MAG}Unzipping straps...${NC}"
+   unzip ChainDB_pruned_latest.zip | tr '\n' '\r'
+   rm -f ChainDB_pruned_latest.zip  
 fi
+
 ANSWER="y"
 while [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ] 
 do
