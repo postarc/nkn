@@ -176,7 +176,7 @@ if [ -f nknd ]; then
 fi
 
 if [ -e ChainDB_pruned_latest.zip ];then rm -f ChainDB_pruned_latest.zip; fi
-if [ [ -e $HOMEFOLDER/ChainDB ]; then
+if [ -e $HOMEFOLDER/ChainDB ]; then
    echo -e -n "${BLUE}Straps dir ChainDB exist. Download anyway?[${PURPLE}Y;n${BLUE}]:${NC}"
    read ANSWER;
    if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ ! $ANSWER = 'y' ]; then
