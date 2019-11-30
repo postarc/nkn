@@ -264,7 +264,7 @@ cd $CURRENTDIR
 echo -e -n "${YELLOW}Do you want to start docker containers[${PURPLE}Y,n${YELLOW}]?:${NC}"
 read ANSWER
 if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
-bash $HOMEFOLDER/$START_SCRIPT
+sudo bash $HOMEFOLDER/$START_SCRIPT
 fi
 echo -e "${GREEN}All Done!${NC}"
 
