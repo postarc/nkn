@@ -253,11 +253,11 @@ echo -n '  if [ $? -ne 0 ]; then make; ' >> dockercheck.sh
 echo -e "else unzip "$DIR_NAME.zip" >/dev/null 2>&1; mv $DIR_NAME/nkn* .; rm -rf $DIR_NAME $DIR_NAME.zip; fi" >> dockercheck.sh
 echo  '  chmod +x nknd; chmod +x nknc' >> dockercheck.sh
 echo  '  cp nknd nknc ../../$DOCKER_NAME' >> dockercheck.sh
-echo  '  rm -rf ../$DOCKER_NAME/Log' >> dockercheck.sh
+echo  '  rm -rf ../../$DOCKER_NAME/Log' >> dockercheck.sh
 echo  '  $START_COM' >> dockercheck.sh
 echo  'fi' >> dockercheck.sh
 echo  '   docker top $DOCKER_NAME | grep nknd' >> dockercheck.sh
-echo  '   if [ $? -ne 0 ]; then rm -rf ../$DOCKER_NAME/Log; $START_COM ; fi' >> dockercheck.sh
+echo  '   if [ $? -ne 0 ]; then rm -rf ../../$DOCKER_NAME/Log; $START_COM ; fi' >> dockercheck.sh
 echo  'done' >> dockercheck.sh
 
 chmod +x $HOMEFOLDER/*.sh
