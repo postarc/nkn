@@ -248,16 +248,17 @@ echo  '  if [ -f $DIR_NAME.zip ]; then rm $DIR_NAME.zip; fi' >> dockercheck.sh
 echo -e -n "  wget $RELEASES_PATH" >> dockercheck.sh
 echo  -n '/$LATEST_TAG/' >> dockercheck.sh
 echo  '$DIR_NAME.zip' >> dockercheck.sh
-echo -n '  if [ $? -ne 0 ]; then make; ' >> dockercheck.sh
-echo  'else unzip "$DIR_NAME.zip" >/dev/null 2>&1; mv $DIR_NAME/nkn* .; rm -rf $DIR_NAME $DIR_NAME.zip; fi' >> dockercheck.sh
-echo  '  chmod +x nknd; chmod +x nknc' >> dockercheck.sh
-echo  'fi' >> dockercheck.sh
 echo  'while read -r -u "$DIR_LIST" DOCKER_NAME && read -r -u "$START_SCRIPT" START_COM' >> dockercheck.sh
 echo  'do' >> dockercheck.sh
 echo  -n 'if [[ -z $(' >> dockercheck.sh
 echo -e -n "$CURRENTDIR" >> dockercheck.sh
 echo  '/$DOCKER_NAME/nknd -v | grep $LATEST_TAG) ]]; then' >> dockercheck.sh
-echo  '  docker stop $DOCKER_NAME' >> dockercheck.sh
+echo  '  if [ ! -f nknd ]; then' >> dockercheck.sh
+echo  '     wget https://github.com/nknorg/nkn/releases/download/$LATEST_TAG/$DIR_NAME.zip' >> dockercheck.sh
+echo -n '     if [ $? -ne 0 ]; then make; else unzip "$DIR_NAME.zip" >/dev/null 2>&1; mv $DIR_NAME/nkn* .; rm -rf $DIR_NAME $DIR_NAME.zip; fi' >> dockercheck.sh
+echo  '  chmod +x nknd; chmod +x nknc' >> dockercheck.sh
+echo  'fi' >> dockercheck.sh
+ echo  '  docker stop $DOCKER_NAME' >> dockercheck.sh
 echo  '  cp nknd nknc ../../$DOCKER_NAME' >> dockercheck.sh
 echo  '  rm -rf ../../$DOCKER_NAME/Log' >> dockercheck.sh
 echo  '  $START_COM' >> dockercheck.sh
@@ -265,7 +266,7 @@ echo  'fi' >> dockercheck.sh
 echo  '   docker top $DOCKER_NAME | grep nknd' >> dockercheck.sh
 echo  '   if [ $? -ne 0 ]; then rm -rf ../../$DOCKER_NAME/Log; $START_COM ; fi' >> dockercheck.sh
 echo  'done' >> dockercheck.sh
-echo  'rm nknd nknc' >> dockercheck.sh
+echo  'if [ -f nknd ]; then rm nknd nknc; fi' >> dockercheck.sh
 
 chmod +x $HOMEFOLDER/*.sh
 rm -rf $HOMEFOLDER/ChainDB
