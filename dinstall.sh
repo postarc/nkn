@@ -60,11 +60,14 @@ echo -n -e "${YELLOW}Input Your RegisterIDTxnFee in sat[${PURPLE}$IDTXFEE${YELLO
 read -e IDTXFE
 if [ ! -z $IDTXFE ]; then IDTXFEE=$IDTXFE; fi
 if [[ ! ${IDTXFEE} =~ ^[0-9]+$ ]] ; then IDTXFEE=1 ; fi
+echo -e -n "${YELLOW}Input IP address[${PURPLE}$IP_ADDRESS${YELLOW}]:${NC}"; read -e IP_ADDR
+if [ ! -z $IP_ADDR ]; then IP_ADDRESS=$IP_ADDR; fi
 if [ -f $FCONFIG ]; then rm $FCONFIG ; fi
 cat << EOF > $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)/$FCONFIG
 {
   "BeneficiaryAddr": "$ADDRESS",
   "RegisterIDTxnFee": $IDTXFEE,
+  Hostname": "IP_ADDRESS",
   "StatePruningMode": "lowmem",
   "SeedList": [
     "http://mainnet-seed-0001.nkn.org:30003",
@@ -210,8 +213,6 @@ echo -e "${GREEN}$NODEDIR$(printf "%0*d\n" 3 $INDEX) node setuping:${NC}"
 Copy_Bin
 Config_Create
 Create_Wallet
-echo -e -n "${YELLOW}Input IP address[${PURPLE}$IP_ADDRESS${YELLOW}]:${NC}"; read -e IP_ADDR
-if [ ! -z $IP_ADDR ]; then IP_ADDRESS=$IP_ADDR; fi
 #if [ -d 'ChainDB' ]; then 
 #   echo -e "${CYAN}Copying strap files, please wait...${NC}"
 #   cp -r ChainDB $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)/; fi
