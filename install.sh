@@ -168,6 +168,8 @@ echo -e "${CYAN}firewall setup...${NC}"
 sudo ufw allow 30001/tcp
 sudo ufw allow 30002/tcp
 sudo ufw allow 30003/tcp
+sudo ufw allow 30004/tcp
+sudo ufw allow 30005/tcp
 
 echo -e "${YELLOW}Do you want to download bootstrap file? [Y,n]: ${NC}"
 read -e ANSWER
