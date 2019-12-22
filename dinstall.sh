@@ -235,7 +235,7 @@ rm cron
 echo -e "${CYAN}Creating checking script...${NC}"
 echo  '#!/bin/bash' > dockercheck.sh
 echo -e "cd $HOMEFOLDER" >> dockercheck.sh
-echo 'DIR_NAME=linux-amd64'
+echo 'DIR_NAME=linux-amd64' >> dockercheck.sh
 echo  'exec {DIR_LIST}<dir.list' >> dockercheck.sh
 echo  'exec {START_SCRIPT}<nknstart.sh' >> dockercheck.sh
 echo  -e "if [ -d nkn ]; then cd nkn; git fetch; else git clone $GITPATH; cd nkn; fi" >> dockercheck.sh
@@ -244,15 +244,14 @@ echo  'read -r -u "$START_SCRIPT" START_COM' >> dockercheck.sh
 echo  -n 'if [[ -z $(' >> dockercheck.sh
 echo -e -n "$CURRENTDIR" >> dockercheck.sh
 echo  '/$DOCKER_NAME/nknd -v | grep $LATEST_TAG) ]]; then' >> dockercheck.sh
-echo  '  if [ -f $DIR_NAME.zip ]; then' >> dockercheck.sh
-echo  'rm $DIR_NAME.zip; fi' >> dockercheck.sh
+echo  '  if [ -f $DIR_NAME.zip ]; then rm $DIR_NAME.zip; fi' >> dockercheck.sh
 echo -e -n "  wget $RELEASES_PATH" >> dockercheck.sh
 echo  -n '/$LATEST_TAG/' >> dockercheck.sh
 echo  '$DIR_NAME.zip' >> dockercheck.sh
 echo -n '  if [ $? -ne 0 ]; then make; ' >> dockercheck.sh
 echo  'else unzip "$DIR_NAME.zip" >/dev/null 2>&1; mv $DIR_NAME/nkn* .; rm -rf $DIR_NAME $DIR_NAME.zip; fi' >> dockercheck.sh
 echo  '  chmod +x nknd; chmod +x nknc' >> dockercheck.sh
-echo  'fi'
+echo  'fi' >> dockercheck.sh
 echo  'while read -r -u "$DIR_LIST" DOCKER_NAME && read -r -u "$START_SCRIPT" START_COM' >> dockercheck.sh
 echo  'do' >> dockercheck.sh
 echo  -n 'if [[ -z $(' >> dockercheck.sh
