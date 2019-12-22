@@ -218,7 +218,7 @@ if [ ! -z $IP_ADDR ]; then IP_ADDRESS=$IP_ADDR; fi
 #cd $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)
 #cd $HOMEFOLDER
 echo -e "${CYAN}Writing a startup script...${NC}"
-echo -e "docker run -d -p $IP_ADDRESS:30001-30003:30001-30003 -v $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX):/nkn --name $NODEDIR$(printf "%0*d\n" 3 $INDEX) -w /nkn --rm -it nknorg/nkn /nkn/nknd -p $WPASSWORD" >> $START_SCRIPT
+echo -e "docker run -d -p $IP_ADDRESS:30001-30005:30001-30005 -v $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX):/nkn --name $NODEDIR$(printf "%0*d\n" 3 $INDEX) -w /nkn --rm -it nknorg/nkn /nkn/nknd -p $WPASSWORD" >> $START_SCRIPT
 echo -e $NODEDIR$(printf "%0*d\n" 3 $INDEX) >> $DIR_LIST
 ((INDEX++))
 echo -e -n "${YELLOW}Do you want to set up another docker container?[${PURPLE}Y,n${YELLOW}]:${NC}"; read -e ANSWER
