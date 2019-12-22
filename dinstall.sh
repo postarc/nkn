@@ -241,13 +241,6 @@ echo  'exec {START_SCRIPT}<nknstart.sh' >> dockercheck.sh
 echo  -e "if [ -d nkn ]; then cd nkn; git fetch; else git clone $GITPATH; cd nkn; fi" >> dockercheck.sh
 echo  'LATEST_TAG=$(git tag --sort=-creatordate | head -1)' >> dockercheck.sh
 echo  'read -r -u "$START_SCRIPT" START_COM' >> dockercheck.sh
-echo  -n 'if [[ -z $(' >> dockercheck.sh
-echo -e -n "$CURRENTDIR" >> dockercheck.sh
-echo  '/$DOCKER_NAME/nknd -v | grep $LATEST_TAG) ]]; then' >> dockercheck.sh
-echo  '  if [ -f $DIR_NAME.zip ]; then rm $DIR_NAME.zip; fi' >> dockercheck.sh
-echo -e -n "  wget $RELEASES_PATH" >> dockercheck.sh
-echo  -n '/$LATEST_TAG/' >> dockercheck.sh
-echo  '$DIR_NAME.zip' >> dockercheck.sh
 echo  'while read -r -u "$DIR_LIST" DOCKER_NAME && read -r -u "$START_SCRIPT" START_COM' >> dockercheck.sh
 echo  'do' >> dockercheck.sh
 echo  -n 'if [[ -z $(' >> dockercheck.sh
