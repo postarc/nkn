@@ -230,28 +230,35 @@ if ! cat cron | grep "$HOMEFOLDER/dockercheck.sh"; then echo -e "0 */2 * * * cd 
 sudo crontab -u root cron
 rm cron
 
+
+
 echo -e "${CYAN}Creating checking script...${NC}"
 echo  '#!/bin/bash' > dockercheck.sh
 echo -e "cd $HOMEFOLDER" >> dockercheck.sh
+echo 'DIR_NAME=linux-amd64'
 echo  'exec {DIR_LIST}<dir.list' >> dockercheck.sh
 echo  'exec {START_SCRIPT}<nknstart.sh' >> dockercheck.sh
 echo  -e "if [ -d nkn ]; then cd nkn; git fetch; else git clone $GITPATH; cd nkn; fi" >> dockercheck.sh
 echo  'LATEST_TAG=$(git tag --sort=-creatordate | head -1)' >> dockercheck.sh
 echo  'read -r -u "$START_SCRIPT" START_COM' >> dockercheck.sh
+echo  -n 'if [[ -z $(' >> dockercheck.sh
+echo -e -n "$CURRENTDIR" >> dockercheck.sh
+echo  '/$DOCKER_NAME/nknd -v | grep $LATEST_TAG) ]]; then' >> dockercheck.sh
+echo  '  if [ -f $DIR_NAME.zip ]; then' >> dockercheck.sh
+echo  'rm $DIR_NAME.zip; fi' >> dockercheck.sh
+echo -e -n "  wget $RELEASES_PATH" >> dockercheck.sh
+echo  -n '/$LATEST_TAG/' >> dockercheck.sh
+echo  '$DIR_NAME.zip' >> dockercheck.sh
+echo -n '  if [ $? -ne 0 ]; then make; ' >> dockercheck.sh
+echo  'else unzip "$DIR_NAME.zip" >/dev/null 2>&1; mv $DIR_NAME/nkn* .; rm -rf $DIR_NAME $DIR_NAME.zip; fi' >> dockercheck.sh
+echo  '  chmod +x nknd; chmod +x nknc' >> dockercheck.sh
+echo  'fi'
 echo  'while read -r -u "$DIR_LIST" DOCKER_NAME && read -r -u "$START_SCRIPT" START_COM' >> dockercheck.sh
 echo  'do' >> dockercheck.sh
 echo  -n 'if [[ -z $(' >> dockercheck.sh
 echo -e -n "$CURRENTDIR" >> dockercheck.sh
 echo  '/$DOCKER_NAME/nknd -v | grep $LATEST_TAG) ]]; then' >> dockercheck.sh
 echo  '  docker stop $DOCKER_NAME' >> dockercheck.sh
-echo  '  if [ -f $DIR_NAME.zip ]; then' >> dockercheck.sh
-echo -e "rm $DIR_NAME.zip; fi" >> dockercheck.sh
-echo -e -n "  wget $RELEASES_PATH" >> dockercheck.sh
-echo  -n '/$LATEST_TAG/' >> dockercheck.sh
-echo  '$DIR_NAME.zip' >> dockercheck.sh
-echo -n '  if [ $? -ne 0 ]; then make; ' >> dockercheck.sh
-echo -e "else unzip "$DIR_NAME.zip" >/dev/null 2>&1; mv $DIR_NAME/nkn* .; rm -rf $DIR_NAME $DIR_NAME.zip; fi" >> dockercheck.sh
-echo  '  chmod +x nknd; chmod +x nknc' >> dockercheck.sh
 echo  '  cp nknd nknc ../../$DOCKER_NAME' >> dockercheck.sh
 echo  '  rm -rf ../../$DOCKER_NAME/Log' >> dockercheck.sh
 echo  '  $START_COM' >> dockercheck.sh
@@ -259,6 +266,7 @@ echo  'fi' >> dockercheck.sh
 echo  '   docker top $DOCKER_NAME | grep nknd' >> dockercheck.sh
 echo  '   if [ $? -ne 0 ]; then rm -rf ../../$DOCKER_NAME/Log; $START_COM ; fi' >> dockercheck.sh
 echo  'done' >> dockercheck.sh
+echo  'rm nknd nknc' >> dockercheck.sh
 
 chmod +x $HOMEFOLDER/*.sh
 rm -rf $HOMEFOLDER/ChainDB
