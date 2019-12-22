@@ -164,7 +164,8 @@ echo -e "${YELLOW}firewall setup...${NC}"
 sudo ufw allow 30001/tcp
 sudo ufw allow 30002/tcp
 sudo ufw allow 30003/tcp
-
+sudo ufw allow 30004/tcp
+sudo ufw allow 30005/tcp
 #read -e -p "Do you want to download bootstrap file? [Y,n]: " ANSWER
 #if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
         cd $HOMEFOLDER
