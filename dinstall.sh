@@ -69,7 +69,6 @@ cat << EOF > $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)/$FCONFIG
 {
   "BeneficiaryAddr": "$ADDRESS",
   "RegisterIDTxnFee": $IDTXFEE,
-  Hostname": "IP_ADDRESS",
   "StatePruningMode": "lowmem",
   "SeedList": [
     "http://mainnet-seed-0001.nkn.org:30003",
