@@ -51,6 +51,8 @@ if [ -f nknd ]; then
                 unzip $DIR_NAME.zip >/dev/null 2>&1
                 echo -e "${BLUE}Moving bin files...${NC}"
                 mv $DIR_NAME/nkn* .
+                mv $DIR_NAME/certs .
+                mv $DIR_NAME/web .
                 rm -rf $DIR_NAME
                 rm $DIR_NAME.zip
         else
