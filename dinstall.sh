@@ -33,6 +33,8 @@ function Copy_Bin(){
    if [ ! -d $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX) ]; then mkdir $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX); fi
    cp $HOMEFOLDER/nkn/nknd $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)/.
    cp $HOMEFOLDER/nkn/nknc $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)/.
+   cp -r $HOMEFOLDER/nkn/certs $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)/.
+   cp -r $HOMEFOLDER/nkn/web $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)/.
    if [ -e $HOMEFOLDER/ChainDB ]; then
         if [ -e $CURRENTDIR/$NODEDIR$(printf "%0*d\n" 3 $INDEX)/ChainDB ]; then
          echo -n -e "${YELLOW}ChainDB folder ${RED}exist${YELLOW}. Do you want to overwrite[${PURPLE}Y;n${YELLOW}]:${NC}"
