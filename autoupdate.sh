@@ -45,6 +45,8 @@ echo '  wget "$RELEASES_PATH/$LATEST_TAG/$DIR_NAME.zip"' >> $SCRIPT_NAME
 echo '  unzip "$DIR_NAME.zip" >/dev/null 2>&1' >> $SCRIPT_NAME
 echo '  chmod +x $DIR_NAME/nkn*' >> $SCRIPT_NAME
 echo '  mv $DIR_NAME/nkn* .' >> $SCRIPT_NAME
+echo '  cp -r $DIR_NAME/certs .' >> $SCRIPT_NAME
+echo '  cp -r $DIR_NAME/web .' >> $SCRIPT_NAME
 echo -e "  sudo -u $USER systemctl start nkn.service" >> $SCRIPT_NAME
 echo '  rm -rf $DIR_NAME' >> $SCRIPT_NAME
 echo '  rm $DIR_NAME.zip' >> $SCRIPT_NAME
