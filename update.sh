@@ -7,5 +7,5 @@ cp -r linux-amd64/nkn* nkn-node
 cp -r linux-amd64/certs nkn-node
 cp -r linux-amd64/web nkn-node
 rm -rf linux-amd64 linux-amd64.zip nkn
-
+rm -rf nkn-node/Log
 sudo systemctl start nkn.service
