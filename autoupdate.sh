@@ -44,7 +44,7 @@ echo '  if [ -f $DIR_NAME.zip ]; then rm $DIR_NAME.zip; fi' >> $SCRIPT_NAME
 echo '  wget "$RELEASES_PATH/$LATEST_TAG/$DIR_NAME.zip"' >> $SCRIPT_NAME
 echo '  unzip "$DIR_NAME.zip" >/dev/null 2>&1' >> $SCRIPT_NAME
 echo '  chmod +x $DIR_NAME/nkn*' >> $SCRIPT_NAME
-echo '  cp $DIR_NAME/* .' >> $SCRIPT_NAME
+echo '  cp -r $DIR_NAME/* .' >> $SCRIPT_NAME
 echo '  rm -rf Log' >> $SCRIPT_NAME
 echo -e "  sudo -u $USER systemctl start nkn.service" >> $SCRIPT_NAME
 echo '  rm -rf $DIR_NAME' >> $SCRIPT_NAME
