@@ -254,8 +254,7 @@ echo  '     if [ $? -ne 0 ]; then make; else unzip "$DIR_NAME.zip" >/dev/null 2>
 echo  '     chmod +x nknd; chmod +x nknc' >> dockercheck.sh
 echo  '  fi' >> dockercheck.sh
  echo  '  docker stop $DOCKER_NAME' >> dockercheck.sh
-echo  '  cp nknd nknc ../../$DOCKER_NAME' >> dockercheck.sh
-echo  '  cp -r certs web ../../$DOCKER_NAME' >> dockercheck.sh
+echo  '  cp -r ./* ../../$DOCKER_NAME' >> dockercheck.sh
 echo  '  rm -rf ../../$DOCKER_NAME/Log' >> dockercheck.sh
 echo  '  $START_COM' >> dockercheck.sh
 echo  'fi' >> dockercheck.sh
