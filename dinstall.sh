@@ -249,7 +249,7 @@ echo  'do' >> dockercheck.sh
 echo  -n 'if [[ -z $(' >> dockercheck.sh
 echo -e -n "$CURRENTDIR" >> dockercheck.sh
 echo  '/$DOCKER_NAME/nknd -v | grep $LATEST_TAG) ]]; then' >> dockercheck.sh
-echo  '  if [ ! -f nknd ]; then' >> dockercheck.sh
+echo  '  if [ ! -f tmpfls/nknd ]; then' >> dockercheck.sh
 echo  '     wget https://github.com/nknorg/nkn/releases/download/$LATEST_TAG/$DIR_NAME.zip' >> dockercheck.sh
 echo  '     if [ $? -ne 0 ]; then make; else unzip "$DIR_NAME.zip" >/dev/null 2>&1; cp -r $DIR_NAME/* tmpfls/.; rm -rf $DIR_NAME $DIR_NAME.zip; fi' >> dockercheck.sh
 echo  '     chmod +x tmpfls/nknd; chmod +x tmpfls/nknc' >> dockercheck.sh
