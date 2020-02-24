@@ -173,7 +173,7 @@ if [ -f nknd ]; then
                 echo -e "${MAG}Unzipping bin files...${NC}"
                 unzip $DIR_NAME.zip >/dev/null 2>&1
                 chmod +x $DIR_NAME/nkn*
-                cp $DIR_NAME/nkn* .
+                cp $DIR_NAME/* .
                 rm -rf $DIR_NAME.zip $DIR_NAME
         else
                 echo -e -n "${YELLOW}Bin files not found. Do you want to compile? [${PURPLE}Y,n${YELLOW}]:${NC}"
