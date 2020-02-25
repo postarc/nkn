@@ -45,11 +45,13 @@ echo '  wget "$RELEASES_PATH/$LATEST_TAG/$DIR_NAME.zip"' >> $SCRIPT_NAME
 echo '  unzip "$DIR_NAME.zip" >/dev/null 2>&1' >> $SCRIPT_NAME
 echo '  chmod +x $DIR_NAME/nkn*' >> $SCRIPT_NAME
 echo '  cp -r $DIR_NAME/* .' >> $SCRIPT_NAME
-echo '  rm -rf Log' >> $SCRIPT_NAME
+echo '  rm Log/*' >> $SCRIPT_NAME
 echo -e "  sudo -u $USER systemctl start nkn.service" >> $SCRIPT_NAME
 echo '  rm -rf $DIR_NAME' >> $SCRIPT_NAME
 echo '  rm $DIR_NAME.zip' >> $SCRIPT_NAME
 echo 'fi' >> $SCRIPT_NAME
+echo 'LATEST_TAG=$( ps -e | grep nknd )' >> $SCRIPT_NAME
+echo 'if [ -z $LATEST_TAG ]; then systemctl start nkn.service; fi' >> $SCRIPT_NAME
 echo 'cd $CURRENTDIR' >> $SCRIPT_NAME
 
 chmod +x $SCRIPT_NAME
