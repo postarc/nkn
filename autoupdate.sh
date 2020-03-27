@@ -50,7 +50,7 @@ echo -e "  sudo -u $USER systemctl start nkn.service" >> $SCRIPT_NAME
 echo '  rm -rf $DIR_NAME' >> $SCRIPT_NAME
 echo '  rm $DIR_NAME.zip' >> $SCRIPT_NAME
 echo 'fi' >> $SCRIPT_NAME
-echo 'LATEST_TAG=$( ps -e | grep nknd | awk '{print $1}' )' >> $SCRIPT_NAME
+echo 'LATEST_TAG=$( ps -e | grep nknd | awk '\''{print $1}'\'' )' >> $SCRIPT_NAME
 echo 'if [ -z $LATEST_TAG ]; then systemctl start nkn.service; fi' >> $SCRIPT_NAME
 echo 'cd $CURRENTDIR' >> $SCRIPT_NAME
 
