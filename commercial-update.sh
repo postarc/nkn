@@ -80,7 +80,7 @@ crontab -l > cron
 sed -i '/nknupdate.sh/d' cron
 sudo crontab cron
 rm cron
-#rmdir  ../nkn-node
+rmdir  ../nkn-node
 
 cd $CURRENTDIR
 rm -rf nkn
