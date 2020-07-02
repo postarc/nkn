@@ -48,26 +48,29 @@ mkdir -p $SERVICE_PATH
 mv ../nkn-node/* $SERVICE_PATH/
 rm -rf $SERVICE_PATH/nkn
 rm -rf $SERVICE_PATH/Log
-
+BADDR=$( cat $SERVICE_PATH/config.json | grep BeneficiaryAddr | awk '{print $2}' | tr -d '[",]')
 if [ -f $SYSTEMD_PATH/$SERVICE_NAME ]; then 
         PASSWD=$(sudo cat $SYSTEMD_PATH/$SERVICE_NAME | grep nknd | awk '{print $3}')
         echo $PASSWD > $SERVICE_PATH/wallet.pswd
-        HOMEDIR=ExecStart=$(echo $HOMEFOLDER | sed 's/'\\/'/'\\\\''\\/'/g')\\/$BIN_NAME
+        HOMEDIR=ExecStart=$(echo $HOMEFOLDER | sed 's/'\\/'/'\\\\''\\/'/g')\\/$BIN_NAME -b $BADDR
         sed -i "s/.*nknd.*/$HOMEDIR/" $SYSTEMD_PATH/$SERVICE_NAME
         HOMEDIR='WorkingDirectory='$(echo $HOMEFOLDER | sed 's/'\\/'/'\\\\''\\/'/g')
         sed -i "s/.*WorkingDirectory.*/$HOMEDIR/" $SYSTEMD_PATH/$SERVICE_NAME
-        sed -i 's/.*RestartSec.*/RestartSec=10/' $SYSTEMD_PATH/$SERVICE_NAME
+        sed -i 's/.*RestartSec.*/RestartSec=1/' $SYSTEMD_PATH/$SERVICE_NAME
+        sed -i 's/.*Description.*/Description=nkn-commercial/' $SYSTEMD_PATH/$SERVICE_NAME
+        sed -i '/^Description/a\After=network-online.target' $SYSTEMD_PATH/$SERVICE_NAME
         sudo systemctl daemon-reload
 else
        echo -e "${RED}Service not found. Creating new service. ${NC}"
        echo "[Unit]" > $SERVICE_NAME
-       echo "Description=nkn" >> $SERVICE_NAME
+       echo "Description=nkn-commercial" >> $SERVICE_NAME
+       echo "After=network-online.target" >> $SERVICE_NAME
        echo "[Service]" >> $SERVICE_NAME
        echo -e "User=$USER" >> $SERVICE_NAME
        echo -e "WorkingDirectory=$HOMEFOLDER" >> $SERVICE_NAME
        echo -e "ExecStart=$HOMEFOLDER/$BIN_NAME" >> $SERVICE_NAME
        echo "Restart=always" >> $SERVICE_NAME
-       echo "RestartSec=10" >> $SERVICE_NAME
+       echo "RestartSec=1" >> $SERVICE_NAME
        echo "LimitNOFILE=500000" >> $SERVICE_NAME
        echo "[Install]" >> $SERVICE_NAME
        echo "WantedBy=default.target" >> $SERVICE_NAME
