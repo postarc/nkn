@@ -71,5 +71,7 @@ else
        rm $SERVICE_NAME
 fi
 
-        
+sudo systemctl enable nkn.service
+#sudo systemctl start nkn.service
 #rmdir  ../nkn-node
+
