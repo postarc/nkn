@@ -76,7 +76,5 @@ crontab -l > cron
 sed -i '/nknupdate.sh/d' cron
 sudo crontab cron
 rm cron
-
-nknupdate.sh
 #rmdir  ../nkn-node
 
