@@ -74,6 +74,9 @@ sudo systemctl enable nkn.service
 #sudo systemctl start nkn.service
 crontab -l > cron
 sed -i '/nknupdate.sh/d' /cron
+sudo crontab cron
+rm cron
+
 nknupdate.sh
 #rmdir  ../nkn-node
 
