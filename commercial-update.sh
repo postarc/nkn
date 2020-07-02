@@ -52,7 +52,7 @@ rm -rf $SERVICE_PATH/Log
 BADDR=$( cat $SERVICE_PATH/config.json | grep BeneficiaryAddr | awk '{print $2}' | tr -d '[",]')
 if [ -f $SYSTEMD_PATH/$SERVICE_NAME ]; then 
         PASSWD=$(sudo cat $SYSTEMD_PATH/$SERVICE_NAME | grep nknd | awk '{print $3}')
-        echo $PASSWD > $SERVICE_PATH/wallet.pswd
+        if [ -n $PASSWD ]; then echo $PASSWD > $SERVICE_PATH/wallet.pswd; fi
         HOMEDIR=$(echo $HOMEFOLDER | sed 's/'\\/'/'\\\\''\\/'/g')
         sed -i "s/.*ExecStart.*/ExecStart=$HOMEDIR\\/$BIN_NAME -b $BADDR -d $HOMEDIR/" $SYSTEMD_PATH/$SERVICE_NAME
         HOMEDIR='WorkingDirectory='$(echo $HOMEFOLDER | sed 's/'\\/'/'\\\\''\\/'/g')
