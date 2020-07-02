@@ -46,6 +46,8 @@ sudo ufw allow 32768:65535/udp
 
 mkdir -p $SERVICE_PATH
 mv ../nkn-node/* $SERVICE_PATH/
+rm -rf $SERVICE_PATH/nkn
+rm -rf $SERVICE_PATH/Log
 
 if [ -f $SYSTEMD_PATH/$SERVICE_NAME ]; then 
         PASSWD=$(sudo cat $SYSTEMD_PATH/$SERVICE_NAME | grep nknd | awk '{print $3}')
