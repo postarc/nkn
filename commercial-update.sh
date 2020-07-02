@@ -54,7 +54,7 @@ if [ -f $SYSTEMD_PATH/$SERVICE_NAME ]; then
         PASSWD=$(sudo cat $SYSTEMD_PATH/$SERVICE_NAME | grep nknd | awk '{print $3}')
         echo $PASSWD > $SERVICE_PATH/wallet.pswd
         HOMEDIR=ExecStart=$(echo $HOMEFOLDER | sed 's/'\\/'/'\\\\''\\/'/g')
-        sed -i "s/.*ExecStart.*/$HOMEDIR\\/$BIN_NAME -b $BADDR -d $HOMEDIR/" $SYSTEMD_PATH/$SERVICE_NAME
+        sed -i "s/.*ExecStart.*/$HOMEDIR\\/$BIN_NAME -b $BADDR/" $SYSTEMD_PATH/$SERVICE_NAME
         HOMEDIR='WorkingDirectory='$(echo $HOMEFOLDER | sed 's/'\\/'/'\\\\''\\/'/g')
         sed -i "s/.*WorkingDirectory.*/$HOMEDIR/" $SYSTEMD_PATH/$SERVICE_NAME
         sed -i 's/.*RestartSec.*/RestartSec=1/' $SYSTEMD_PATH/$SERVICE_NAME
