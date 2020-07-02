@@ -5,6 +5,7 @@ RELEASES_PATH="https://commercial.nkn.org/downloads/nkn-commercial"
 SERVICE_PATH="services/nkn-node"
 SYSTEMD_PATH="/etc/systemd/system"
 SERVICE_NAME="nkn.service"
+BIN_NAME="nkn-commercial"
 DIR_NAME="linux-amd64"
 FCONFIG="config.json"
 FWALLET="wallet.json"
@@ -31,10 +32,10 @@ fi
 if [ -d $HOMEFOLDER ] ; then cd $HOMEFOLDER ; else mkdir $HOMEFOLDER; cd $HOMEFOLDER; fi 
 
 # Download bin files & unzip
-wget https://commercial.nkn.org/downloads/nkn-commercial/linux-amd64.zip
-unzip linux-amd64.zip
-mv linux-amd64/* ./
-rm -rf linux-amd64*
+wget $RELEASES_PATH/$DIR_NAME.zip
+unzip $DIR_NAME.zip
+mv $DIR_NAME/* ./
+rm -rf $DIR_NAME*
 
 # Firewall setup
 sudo ufw allow 30001:30005/tcp
@@ -44,7 +45,28 @@ sudo ufw allow 32768:65535/tcp
 sudo ufw allow 32768:65535/udp
 
 mv ../nkn-node/* $SERVICE_PATH/*
-PASSWD=$(sudo cat $SYSTEMD_PATH/$SERVICE_NAME | grep nknd | awk '{print $3}')
-echo $PASSWD > $SERVICE_PATH/wallet.pswd
+if [ -f $SYSTEMD_PATH/$SERVICE_NAME ]; then 
+        PASSWD=$(sudo cat $SYSTEMD_PATH/$SERVICE_NAME | grep nknd | awk '{print $3}')
+        echo $PASSWD > $SERVICE_PATH/wallet.pswd
+        HOMEDIR=ExecStart=$(echo $HOMEFOLDER | sed 's/'\\/'/'\\\\''\\/'/g')\\/$BIN_NAME
+        sed -i "s/.*nknd.*/$HOMEDIR/" $SYSTEMD_PATH/$SERVICE_NAME
+        HOMEDIR='WorkingDirectory='$(echo $HOMEFOLDER | sed 's/'\\/'/'\\\\''\\/'/g')
+        sed -i "s/.*WorkingDirectory.*/$HOMEDIR/" $SYSTEMD_PATH/$SERVICE_NAME
+        sudo systemctl reload-daemon
+ else
+       echo -e "${RED}Service not found. Creating new service. ${NC}"
+       echo "[Unit]" > nkn.service
+       echo "Description=nkn" >> nkn.service
+       echo "[Service]" >> nkn.service
+       echo -e "User=$USER" >> nkn.service
+       echo -e "WorkingDirectory=$HOMEFOLDER" >> nkn.service
+       echo -e "ExecStart=$HOMEFOLDER/$BIN_NAME" >> nkn.service
+       echo "Restart=always" >> nkn.service
+       echo "RestartSec=3" >> nkn.service
+       echo "LimitNOFILE=500000" >> nkn.service
+       echo "[Install]" >> nkn.service
+       echo "WantedBy=default.target" >> nkn.service
+       
+       sudo cp nkn.service /etc/systemd/system/nkn.service 
+        
 #rmdir  ../nkn-node
-sudo rm $SYSTEMD_PATH/$SERVICE_NAME
