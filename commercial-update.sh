@@ -39,3 +39,6 @@ ufw allow 30010,30020/tcp
 ufw allow 30011,30021/udp
 ufw allow 32768:65535/tcp
 ufw allow 32768:65535/udp
+
+mv ../nkn-node/* services/nkn-node/*
+PASSWD=$(cat /etc/systemd/system/nkn.service | grep nknd | awk '{print $3}')
