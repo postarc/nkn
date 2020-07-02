@@ -2,6 +2,7 @@
 
 #GITPATH="https://github.com/nknorg/nkn.git"
 RELEASES_PATH="https://commercial.nkn.org/downloads/nkn-commercial"
+SERVICE_PATH="services/nkn-node"
 DIR_NAME="linux-amd64"
 FCONFIG="config.json"
 FWALLET="wallet.json"
@@ -40,5 +41,6 @@ ufw allow 30011,30021/udp
 ufw allow 32768:65535/tcp
 ufw allow 32768:65535/udp
 
-mv ../nkn-node/* services/nkn-node/*
+mv ../nkn-node/* $SERVICE_PATH/*
 PASSWD=$(cat /etc/systemd/system/nkn.service | grep nknd | awk '{print $3}')
+echo $PASSWD > $SERVICE_PATH/wallet.pswd
