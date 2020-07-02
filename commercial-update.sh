@@ -72,7 +72,6 @@ else
        echo -e "ExecStart=$HOMEFOLDER/$BIN_NAME -b $BADDR" >> $SERVICE_NAME
        echo "Restart=always" >> $SERVICE_NAME
        echo "RestartSec=1" >> $SERVICE_NAME
-       echo "LimitNOFILE=500000" >> $SERVICE_NAME
        echo "[Install]" >> $SERVICE_NAME
        echo "WantedBy=multi-user.target" >> $SERVICE_NAME
        sudo cp $SERVICE_NAME $SYSTEMD_PATH/$SERVICE_NAME 
