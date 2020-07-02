@@ -44,7 +44,9 @@ sudo ufw allow 30011,30021/udp
 sudo ufw allow 32768:65535/tcp
 sudo ufw allow 32768:65535/udp
 
-mv ../nkn-node/* $SERVICE_PATH/*
+mkdir -p $SERVICE_PATH
+mv ../nkn-node/* $SERVICE_PATH/
+
 if [ -f $SYSTEMD_PATH/$SERVICE_NAME ]; then 
         PASSWD=$(sudo cat $SYSTEMD_PATH/$SERVICE_NAME | grep nknd | awk '{print $3}')
         echo $PASSWD > $SERVICE_PATH/wallet.pswd
