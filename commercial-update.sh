@@ -53,7 +53,7 @@ if [ -f $SYSTEMD_PATH/$SERVICE_NAME ]; then
         PASSWD=$(sudo cat $SYSTEMD_PATH/$SERVICE_NAME | grep nknd | awk '{print $3}')
         echo $PASSWD > $SERVICE_PATH/wallet.pswd
         HOMEDIR=ExecStart=$(echo $HOMEFOLDER | sed 's/'\\/'/'\\\\''\\/'/g')\\/$BIN_NAME
-        sed -i "s/.*ExecStart.*/$HOMEDIR -b $BADDR/" $SYSTEMD_PATH/$SERVICE_NAME
+        sed -i "s/.*ExecStart.*/$HOMEDIR -b $BADDR -d $HOMEFOLDER/" $SYSTEMD_PATH/$SERVICE_NAME
         HOMEDIR='WorkingDirectory='$(echo $HOMEFOLDER | sed 's/'\\/'/'\\\\''\\/'/g')
         sed -i "s/.*WorkingDirectory.*/$HOMEDIR/" $SYSTEMD_PATH/$SERVICE_NAME
         sed -i 's/.*RestartSec.*/RestartSec=1/' $SYSTEMD_PATH/$SERVICE_NAME
@@ -71,7 +71,7 @@ else
        echo "Type=simple" >> $SERVICE_NAME
        echo -e "User=$USER" >> $SERVICE_NAME
        echo -e "WorkingDirectory=$HOMEFOLDER" >> $SERVICE_NAME
-       echo -e "ExecStart=$HOMEFOLDER/$BIN_NAME -b $BADDR" >> $SERVICE_NAME
+       echo -e "ExecStart=$HOMEFOLDER/$BIN_NAME -b $BADDR -d $HOMEFOLDER" >> $SERVICE_NAME
        echo "Restart=always" >> $SERVICE_NAME
        echo "RestartSec=1" >> $SERVICE_NAME
        echo "[Install]" >> $SERVICE_NAME
