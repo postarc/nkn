@@ -52,6 +52,7 @@ if [ -f $SYSTEMD_PATH/$SERVICE_NAME ]; then
         sed -i "s/.*nknd.*/$HOMEDIR/" $SYSTEMD_PATH/$SERVICE_NAME
         HOMEDIR='WorkingDirectory='$(echo $HOMEFOLDER | sed 's/'\\/'/'\\\\''\\/'/g')
         sed -i "s/.*WorkingDirectory.*/$HOMEDIR/" $SYSTEMD_PATH/$SERVICE_NAME
+        sed -i 's/.*RestartSec.*/RestartSec=10/' $SYSTEMD_PATH/$SERVICE_NAME
         sudo systemctl daemon-reload
 else
        echo -e "${RED}Service not found. Creating new service. ${NC}"
@@ -62,7 +63,7 @@ else
        echo -e "WorkingDirectory=$HOMEFOLDER" >> $SERVICE_NAME
        echo -e "ExecStart=$HOMEFOLDER/$BIN_NAME" >> $SERVICE_NAME
        echo "Restart=always" >> $SERVICE_NAME
-       echo "RestartSec=5" >> $SERVICE_NAME
+       echo "RestartSec=10" >> $SERVICE_NAME
        echo "LimitNOFILE=500000" >> $SERVICE_NAME
        echo "[Install]" >> $SERVICE_NAME
        echo "WantedBy=default.target" >> $SERVICE_NAME
