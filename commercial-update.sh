@@ -52,21 +52,23 @@ if [ -f $SYSTEMD_PATH/$SERVICE_NAME ]; then
         sed -i "s/.*nknd.*/$HOMEDIR/" $SYSTEMD_PATH/$SERVICE_NAME
         HOMEDIR='WorkingDirectory='$(echo $HOMEFOLDER | sed 's/'\\/'/'\\\\''\\/'/g')
         sed -i "s/.*WorkingDirectory.*/$HOMEDIR/" $SYSTEMD_PATH/$SERVICE_NAME
-        sudo systemctl reload-daemon
- else
+        sudo systemctl daemon-reload
+else
        echo -e "${RED}Service not found. Creating new service. ${NC}"
-       echo "[Unit]" > nkn.service
-       echo "Description=nkn" >> nkn.service
-       echo "[Service]" >> nkn.service
-       echo -e "User=$USER" >> nkn.service
-       echo -e "WorkingDirectory=$HOMEFOLDER" >> nkn.service
-       echo -e "ExecStart=$HOMEFOLDER/$BIN_NAME" >> nkn.service
-       echo "Restart=always" >> nkn.service
-       echo "RestartSec=3" >> nkn.service
-       echo "LimitNOFILE=500000" >> nkn.service
-       echo "[Install]" >> nkn.service
-       echo "WantedBy=default.target" >> nkn.service
-       
-       sudo cp nkn.service /etc/systemd/system/nkn.service 
+       echo "[Unit]" > $SERVICE_NAME
+       echo "Description=nkn" >> $SERVICE_NAME
+       echo "[Service]" >> $SERVICE_NAME
+       echo -e "User=$USER" >> $SERVICE_NAME
+       echo -e "WorkingDirectory=$HOMEFOLDER" >> $SERVICE_NAME
+       echo -e "ExecStart=$HOMEFOLDER/$BIN_NAME" >> $SERVICE_NAME
+       echo "Restart=always" >> $SERVICE_NAME
+       echo "RestartSec=5" >> $SERVICE_NAME
+       echo "LimitNOFILE=500000" >> $SERVICE_NAME
+       echo "[Install]" >> $SERVICE_NAME
+       echo "WantedBy=default.target" >> $SERVICE_NAME
+       sudo cp $SERVICE_NAME $SYSTEMD_PATH/$SERVICE_NAME 
+       rm $SERVICE_NAME
+fi
+
         
 #rmdir  ../nkn-node
