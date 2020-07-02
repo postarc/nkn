@@ -58,8 +58,8 @@ if [ -f $SYSTEMD_PATH/$SERVICE_NAME ]; then
         sed -i "s/.*WorkingDirectory.*/$HOMEDIR/" $SYSTEMD_PATH/$SERVICE_NAME
         sed -i 's/.*RestartSec.*/RestartSec=1/' $SYSTEMD_PATH/$SERVICE_NAME
         sed -i 's/.*Description.*/Description=nkn-commercial/' $SYSTEMD_PATH/$SERVICE_NAME
-        if ! cat $SYSTEMD_PATH/$SERVICE_NAME | grep "After="; then sed -i '/^Description/a\After=network-online.target' $SYSTEMD_PATH/$SERVICE_NAME; fi >/dev/null 2>&1
-        if ! cat $SYSTEMD_PATH/$SERVICE_NAME | grep "Type=simple"; then sed -i '/^Service/a\Type=simple' $SYSTEMD_PATH/$SERVICE_NAME; fi >/dev/null 2>&1
+        if ! cat $SYSTEMD_PATH/$SERVICE_NAME | grep "After="; then sed -i '/^Description/a\After=network-online.target' $SYSTEMD_PATH/$SERVICE_NAME; fi 
+        if ! cat $SYSTEMD_PATH/$SERVICE_NAME | grep "Type=simple"; then sed -i '/^Service/a\Type=simple' $SYSTEMD_PATH/$SERVICE_NAME; fi 
         sed -i 's/.*WantedBy.*/WantedBy=multi-user.target/' $SYSTEMD_PATH/$SERVICE_NAME
         sudo systemctl daemon-reload
 else
