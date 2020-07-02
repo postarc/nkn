@@ -70,8 +70,10 @@ else
        sudo cp $SERVICE_NAME $SYSTEMD_PATH/$SERVICE_NAME 
        rm $SERVICE_NAME
 fi
-
 sudo systemctl enable nkn.service
 #sudo systemctl start nkn.service
+crontab -l > cron
+sed -i '/nknupdate.sh/d' /cron
+nknupdate.sh
 #rmdir  ../nkn-node
 
