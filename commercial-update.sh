@@ -31,6 +31,7 @@ if [[ "$USER" == "root" ]]; then
 fi
 if [ -d $HOMEFOLDER ] ; then cd $HOMEFOLDER ; else mkdir $HOMEFOLDER; fi; cd $HOMEFOLDER
 
+sudo systemctl stop nkn
 # Download bin files & unzip
 wget $RELEASES_PATH/$DIR_NAME.zip
 unzip $DIR_NAME.zip
@@ -80,7 +81,6 @@ else
        rm $SERVICE_NAME
 fi
 sudo systemctl enable nkn.service
-#sudo systemctl start nkn.service
 crontab -l > cron
 sed -i '/nknupdate.sh/d' cron
 sudo crontab cron
@@ -90,3 +90,4 @@ rmdir  ../nkn-node
 cd $CURRENTDIR
 rm -rf nkn
 
+sudo systemctl start nkn
