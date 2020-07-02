@@ -29,7 +29,7 @@ if [[ "$USER" == "root" ]]; then
  else
         HOMEFOLDER="/home/$USER/nkn-commercial"
 fi
-if [ -d $HOMEFOLDER ] ; then cd $HOMEFOLDER ; else mkdir $HOMEFOLDER; cd $HOMEFOLDER; fi 
+if [ -d $HOMEFOLDER ] ; then cd $HOMEFOLDER ; else mkdir $HOMEFOLDER; fi; cd $HOMEFOLDER
 
 # Download bin files & unzip
 wget $RELEASES_PATH/$DIR_NAME.zip
@@ -81,4 +81,7 @@ sed -i '/nknupdate.sh/d' cron
 sudo crontab cron
 rm cron
 #rmdir  ../nkn-node
+
+cd $CURRENTDIR
+rm -rf nkn
 
