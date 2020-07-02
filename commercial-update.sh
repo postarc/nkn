@@ -91,4 +91,4 @@ rmdir  ../nkn-node
 cd $CURRENTDIR
 rm -rf nkn
 
-#sudo systemctl start nkn
+sudo systemctl start nkn
