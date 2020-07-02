@@ -3,6 +3,8 @@
 #GITPATH="https://github.com/nknorg/nkn.git"
 RELEASES_PATH="https://commercial.nkn.org/downloads/nkn-commercial"
 SERVICE_PATH="services/nkn-node"
+SYSTEMD_PATH="/etc/systemd/system"
+SERVICE_NAME="nkn.service"
 DIR_NAME="linux-amd64"
 FCONFIG="config.json"
 FWALLET="wallet.json"
@@ -35,12 +37,14 @@ mv linux-amd64/* ./
 rm -rf linux-amd64*
 
 # Firewall setup
-ufw allow 30001:30005/tcp
-ufw allow 30010,30020/tcp 
-ufw allow 30011,30021/udp
-ufw allow 32768:65535/tcp
-ufw allow 32768:65535/udp
+sudo ufw allow 30001:30005/tcp
+sudo ufw allow 30010,30020/tcp 
+sudo ufw allow 30011,30021/udp
+sudo ufw allow 32768:65535/tcp
+sudo ufw allow 32768:65535/udp
 
 mv ../nkn-node/* $SERVICE_PATH/*
-PASSWD=$(cat /etc/systemd/system/nkn.service | grep nknd | awk '{print $3}')
+PASSWD=$(sudo cat $SYSTEMD_PATH/$SERVICE_NAME | grep nknd | awk '{print $3}')
 echo $PASSWD > $SERVICE_PATH/wallet.pswd
+#rmdir  ../nkn-node
+sudo rm $SYSTEMD_PATH/$SERVICE_NAME
