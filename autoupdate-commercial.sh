@@ -3,9 +3,9 @@
 SCRIPT_NAME="nknupdate.sh"
 
 if [[ "$USER" == "root" ]]; then
-        HOMEFOLDER="/root/nkn-commercial/servces/nkn-node"
+        HOMEFOLDER="/root/nkn-commercial/services/nkn-node"
  else
-        HOMEFOLDER="/home/$USER/nkn-commercial/servces/nkn-node"
+        HOMEFOLDER="/home/$USER/nkn-commercial/services/nkn-node"
 fi
 
 CURRENTDIR=$(pwd)
