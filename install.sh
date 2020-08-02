@@ -128,7 +128,7 @@ cat << EOF > $FCONFIG
     "http://mainnet-seed-0043.nkn.org:30003",
     "http://mainnet-seed-0044.nkn.org:30003"
   ],
-  "GenesisBlockProposer": "a0309f8280ca86687a30ca86556113a253762e40eb884fc6063cad2b1ebd7de5",
+  "GenesisBlockProposer": "a0309f8280ca86687a30ca86556113a253762e40eb884fc6063cad2b1ebd7de5"
 }
 EOF
 sleep 2
