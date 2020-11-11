@@ -210,10 +210,9 @@ cd $CURRENTDIR
 bash nkn/autoupdate.sh
 rm -rf nkn
 
-echo -e "${YELLOW}Please wait 3 minuts...${NC}"
 secs=$((3 * 60))
 while [ $secs -gt 0 ]; do
-   echo -ne "$secs\033[0K\r"
+   echo -ne "${YELLOW}Please wait 3 minuts... $secs\033[0K\r${NC}"
    sleep 1
    : $((secs--))
 done
