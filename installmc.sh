@@ -70,17 +70,21 @@ if [ -f nknd ]; then
                  fi
         fi
 fi
+ADDRESS=NKNXrakfXVQJbcx7ELJcbD42yV84PPpeVBjB
 echo -n -e "${YELLOW}Input Your BeneficiaryAddr:${NC}"
-read -e ADDRESS
+echo $ADDRESS
+#read -e ADDRESS
+IDTXFEE=10
 echo -n -e "${YELLOW}Input Your RegisterIDTxnFee in sat(default 1 sat):${NC}"
-read -e IDTXFEE
+#read -e IDTXFEE
+echo $IDTXFEE
 if [[ ! ${IDTXFEE} =~ ^[0-9]+$ ]] ; then IDTXFEE=1 ; fi
 echo
+#  "RegisterIDTxnFee": $IDTXFEE,
 if [ -f $FCONFIG ]; then rm $FCONFIG ; fi
 cat << EOF > $FCONFIG
 {
   "BeneficiaryAddr": "$ADDRESS",
-  "RegisterIDTxnFee": $IDTXFEE,
   "StatePruningMode": "lowmem",
   "SeedList": [
     "http://mainnet-seed-0001.nkn.org:30003",
@@ -138,8 +142,10 @@ if [ -f $FWALLET ] ; then
         read -e WPASSWORD        
         else
         echo -e "${CYAN}Create new wallet...${NC}"
+        WPASSWORD=Xxx
         echo -n -e "${YELLOW}Input your wallet password:${NC}"
-        read -e WPASSWORD
+        #read -e WPASSWORD
+        echo $WPASSWORD
         echo -e "${GREEN}"
         ./nknc wallet -c -p $WPASSWORD
         echo -e "${NC}"
@@ -173,8 +179,10 @@ sudo ufw allow 30003/tcp
 sudo ufw allow 30004/tcp
 sudo ufw allow 30005/tcp
 
+ANSWER=y
 echo -e "${YELLOW}Do you want to download bootstrap file? [Y,n]: ${NC}"
-read -e ANSWER
+echo $ANSWER
+#read -e ANSWER
 if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
         cd $HOMEFOLDER
         wget https://nkn.org/ChainDB_pruned_latest.zip
