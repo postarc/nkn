@@ -210,6 +210,6 @@ cd $CURRENTDIR
 bash nkn/autoupdate.sh
 rm -rf nkn
 
-echo "${YELLOW}Please wait 3 minuts...${NC}"
+echo -e "${YELLOW}Please wait 3 minuts...${NC}"
 sleep 180
 nkn-node/nknc info -s
