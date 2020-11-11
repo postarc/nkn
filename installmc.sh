@@ -149,8 +149,8 @@ if [ -f $FWALLET ] ; then
         echo -e "${GREEN}"
         ./nknc wallet -c -p $WPASSWORD
         echo -e "${NC}"
-        echo -n -e "${YELLOW}Send $IDTXFEE sat nkn to address and press <ENTER>${NC}"
-        read -e ANSWER
+        #echo -n -e "${YELLOW}Send $IDTXFEE sat nkn to address and press <ENTER>${NC}"
+        #read -e ANSWER
         fi
 sleep 2
 echo -e "${CYAN}Creating nkn service...${NC}"
@@ -185,7 +185,7 @@ echo $ANSWER
 #read -e ANSWER
 if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
         cd $HOMEFOLDER
-        wget https://nkn.org/ChainDB_pruned_latest.zip
+        #wget https://nkn.org/ChainDB_pruned_latest.zip
         unzip ChainDB_pruned_latest.zip | tr '\n' '\r'
         rm -rf ChainDB_pruned_latest.zip
 fi       
@@ -209,3 +209,7 @@ echo -e "${CYAN}After editing nkn.service file: ${BLUE}sudo systemctl daemon-rel
 cd $CURRENTDIR
 bash nkn/autoupdate.sh
 rm -rf nkn
+
+echo "${YELLOW}Please wait 3 minuts...${NC}"
+sleep 180
+nkn-node/nknc info -s
