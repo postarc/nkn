@@ -80,13 +80,12 @@ echo -n -e "${YELLOW}Input Your RegisterIDTxnFee in sat(default 1 sat):${NC}"
 echo $IDTXFEE
 if [[ ! ${IDTXFEE} =~ ^[0-9]+$ ]] ; then IDTXFEE=1 ; fi
 echo
-#  
+#    "RegisterIDTxnFee": $IDTXFEE,
 if [ -f $FCONFIG ]; then rm $FCONFIG ; fi
 cat << EOF > $FCONFIG
 {
   "BeneficiaryAddr": "$ADDRESS",
   "StatePruningMode": "lowmem",
-  "RegisterIDTxnFee": $IDTXFEE,
   "SeedList": [
     "http://mainnet-seed-0001.nkn.org:30003",
     "http://mainnet-seed-0002.nkn.org:30003",
