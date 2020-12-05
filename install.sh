@@ -50,7 +50,8 @@ if [ -d nkn ]; then
   git clone $GITPATH
   cd nkn
 fi
-LATEST_TAG=$(git tag --sort=-creatordate | head -1)
+# LATEST_TAG=$(git tag --sort=-creatordate | head -1) 
+LATEST_TAG=$(git tag | sort -d | tail -n 1)
 cd ..
 
 if [ -f $DIR_NAME.zip ]; then rm $DIR_NAME.zip ; fi
