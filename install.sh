@@ -18,6 +18,19 @@ GREEN="\033[0;32m"
 NC='\033[0m'
 MAG='\e[1;35m'
 
+apt --help > /dev/null
+if [ $? -eq 0 ]; then
+      sudo apt update
+      APPGET="apt"
+else
+      yum --help > /dev/null
+      if [ $? -eq 0 ]; then
+         sudo yum check-update
+         APPGET="yum"
+      fi
+fi
+
+
 if [[ "$USER" == "root" ]]; then
         HOMEFOLDER="/root/nkn-node"
 #       echo -e "${RED}Do not install node in the root folder, please create new user${NC}"
@@ -26,7 +39,7 @@ if [[ "$USER" == "root" ]]; then
         HOMEFOLDER="/home/$USER/nkn-node"
 fi
 
-sudo apt-get install unzip -y 
+sudo $APPGET install unzip -y 
 CURRENTDIR=$(pwd)
 if [ -d $HOMEFOLDER ] ; then cd $HOMEFOLDER ; else mkdir $HOMEFOLDER; cd $HOMEFOLDER; fi
 
@@ -59,9 +72,8 @@ if [ -f nknd ]; then
                 echo -e "${YELLOW}Bin files not found. Do you want to compile? [Y,n]:${NC}"
                 read -e ANSWER
                 if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
-                        sudo add-apt-repository -y ppa:longsleep/golang-backports
-                        sudo apt-get update
-                        sudo apt-get install -y golang-go
+                        sudo $APPGET update
+                        sudo $APPGET install -y golang-go
                         cd $HOMEFOLDER/nkn
                         make
                         mv nknd ..
