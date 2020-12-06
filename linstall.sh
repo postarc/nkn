@@ -15,7 +15,7 @@ STARTING_COUNTER=1
 
 echo -e -n "${YELLOW}Personal Access Token: ${NC}"
 read TOKEN
-if [ -z $TOKEN ]; then break ; fi
+if [ -z $TOKEN ]; then exit ; fi
 
 echo -e -n "${YELLOW}Number of nodes to run [default: 1]: ${NC}"
 read NODE_COUNT
