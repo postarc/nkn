@@ -49,7 +49,8 @@ fi
 
 COUNTER=0
 while [ $COUNTER -lt $NODE_COUNT ]; do
-    SERVER_LABEL=$SERVER_NAME$(printf "%0*d\n" 3 $COUNTER+$STARTING_COUNTER)
+    STARTING_COUNTER+=$COUNTER
+    SERVER_LABEL=$SERVER_NAME$(printf "%0*d\n" 3 $STARTING_COUNTER)
     JSON_DATA="{ \"backups_enabled\": false, \"swap_size\": 1025, \"image\": \"linode/ubuntu18.04\", \"root_pass\": \"$PASSWORD\", \"stackscript_id\": $STACK_ID, \
           \"booted\": true, \"label\": \"$SERVER_LABEL\", \"type\": \"g6-nanode-1\", \"region\": \"$SERVER_REGION\", \"group\": \"Linode-Group\" }"
 
