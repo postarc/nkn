@@ -41,9 +41,8 @@ else
     JSON_DATA="{ \"label\" : \"$SERVER_NAME\","
 	JSON_DATA+='"description" : "NKN node Installing","images" : [ "linode/ubuntu16.04lts","linode/ubuntu18.04","linode/ubuntu19.10","linode/ubuntu20.04" ],'
 	JSON_DATA+='"is_public" : false,"rev_note" : "Set up NKN node","script" : "#!/bin/bash\ngit clone https://github.com/postarc/nkn.git\nsudo bash nkn/installmc.sh\nsudo systemctl restart nkn.service\n" }'
-	STACK_ID=$(curl -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" \
-        -X POST -d "${JSON_DATA}"  https://api.linode.com/v4/linode/stackscripts | jq '.id | tonumber')
-	echo -e $STACK_ID >> stackscripts.id
+	curl -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" \
+          -X POST -d "${JSON_DATA}"  https://api.linode.com/v4/linode/stackscripts | jq '.id | tonumber' >> stackscripts.id
 fi
 #echo $JSON_DATA | jq '.'
 
