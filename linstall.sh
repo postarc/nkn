@@ -46,7 +46,7 @@ echo $JSON_DATA | jq '.' >> $LOG_FILE
 STACK_ID=$(curl -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" \
   -X POST -d "${JSON_DATA}"  https://api.linode.com/v4/linode/stackscripts | jq '.id | tonumber')
 echo -e "${BLUE}Script ID:$STACK_ID${NC}" >> $LOG_FILE
-if [ -z $STACK_ID ] || [ $STACK_ID == "null" ]; then echo -e "${RED}Stack script creating error, result:$STACK_ID${NC}"; exit; fi
+if [[ -z $STACK_ID ]] || [[ $STACK_ID == "null" ]]; then echo -e "${RED}Stack script creating error, result:$STACK_ID${NC}"; exit; fi
 
 COUNTER=0
 while [ $COUNTER -lt $NODE_COUNT ]; do
@@ -61,7 +61,7 @@ while [ $COUNTER -lt $NODE_COUNT ]; do
     #echo -e -n "${BLUE}Server IP:${NC}"
     #echo $SERVER_IP | jq '.data[].ipv4' | tr -d \"[]
     echo $SERVER_IP | jq '.' >> $LOG_FILE
-    if [ -z $SERVER_IP ] || [ $SERVER_IP == "null" ]; then echo  -e "${RED}Server creating error, result:$STACK_ID${NC}:"; exit
+    if [[ -z $SERVER_IP ]] || [[ $SERVER_IP == "null" ]]; then echo  -e "${RED}Server creating error, result:$STACK_ID${NC}:"; exit
     #else echo $SERVER_IP >> $SERVER_IP_FILE
     fi
     (( COUNTER++ ))
