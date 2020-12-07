@@ -55,9 +55,8 @@ while [ $COUNTER -lt $NODE_COUNT ]; do
 
     #echo $JSON_DATA | jq '.'
     echo -e "${CYAN}Instances $SERVER_LABEL creating...${NC}"
-    SERVER_IP=$(curl -H "Content-Type: application/json"  -H "Authorization: Bearer $TOKEN" -X POST -d "${JSON_DATA}" \
-        https://api.linode.com/v4/linode/instances | jq -c '.data[].ipv4' | tr -d \"[] )
-    echo -e $SERVER_IP >> serverip.list
+    curl -H "Content-Type: application/json"  -H "Authorization: Bearer $TOKEN" -X POST -d "${JSON_DATA}" \
+        https://api.linode.com/v4/linode/instances | jq -c '.data[].ipv4' | tr -d \"[] >> serverip.list
 	(( COUNTER++ ))
 done
 
