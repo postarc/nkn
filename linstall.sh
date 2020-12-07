@@ -39,10 +39,10 @@ if [ -f stackscripts.id ]; then
 	STACK_ID=$(cat stackscripts.id)
 else
     JSON_DATA="{ \"label\" : \"$SERVER_NAME\","
-	JSON_DATA+='"description" : "NKN node Installing","images" : [ "linode/ubuntu16.04lts","linode/ubuntu18.04","linode/ubuntu19.10","linode/ubuntu20.04" ],'
-	JSON_DATA+='"is_public" : false,"rev_note" : "Set up NKN node","script" : "#!/bin/bash\ngit clone https://github.com/postarc/nkn.git\nsudo bash nkn/installmc.sh\nsudo systemctl restart nkn.service\n" }'
-	curl -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" \
-          -X POST -d "${JSON_DATA}"  https://api.linode.com/v4/linode/stackscripts | jq '.id | tonumber' >> stackscripts.id
+    JSON_DATA+='"description" : "NKN node Installing","images" : [ "linode/ubuntu16.04lts","linode/ubuntu18.04","linode/ubuntu19.10","linode/ubuntu20.04" ],'
+    JSON_DATA+='"is_public" : false,"rev_note" : "Set up NKN node","script" : "#!/bin/bash\ngit clone https://github.com/postarc/nkn.git\nsudo bash nkn/installmc.sh\nsudo systemctl restart nkn.service\n" }'
+    curl -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" \
+       -X POST -d "${JSON_DATA}"  https://api.linode.com/v4/linode/stackscripts | jq '.id | tonumber' >> stackscripts.id
 fi
 #echo $JSON_DATA | jq '.'
 
