@@ -195,7 +195,7 @@ sudo ufw allow 30003/tcp
 sudo ufw allow 30004/tcp
 sudo ufw allow 30005/tcp
 
-echo -e "${YELLOW}Do you want to download bootstrap file? [Y,n]: ${NC}"
+echo -e -n "${YELLOW}Do you want to download bootstrap file? [Y,n]: ${NC}"
 read -e ANSWER
 if [ -z $ANSWER ] || [ $ANSWER = 'Y' ] || [ $ANSWER = 'y' ]; then
         cd $HOMEFOLDER
