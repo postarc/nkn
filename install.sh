@@ -155,16 +155,19 @@ if [ -f $FWALLET ] ; then
         echo -e "${RED}Wallet already exist!${NC}"
         echo -n -e "${YELLOW}Input your wallet password:${NC}"
         read -e WPASSWORD        
-        else
+else
         echo -e "${CYAN}Create new wallet...${NC}"
         echo -n -e "${YELLOW}Input your wallet password:${NC}"
         read -e WPASSWORD
         echo -e "${GREEN}"
         ./nknc wallet -c -p $WPASSWORD
         echo -e "${NC}"
-        echo -n -e "${YELLOW}Send $IDTXFEE sat nkn to address and press <ENTER>${NC}"
-        read -e ANSWER
+        if [ $IDTXFEE -gt 0 ]; then 
+           echo -n -e "${YELLOW}Send $IDTXFEE sat nkn to address and press <ENTER>${NC}"
+           read -e ANSWER
         fi
+        
+fi
 sleep 2
 echo -e "${CYAN}Creating nkn service...${NC}"
 
