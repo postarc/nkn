@@ -85,15 +85,21 @@ if [ -f nknd ]; then
 fi
 echo -n -e "${YELLOW}Input Your BeneficiaryAddr:${NC}"
 read -e ADDRESS
-echo -n -e "${YELLOW}Input Your RegisterIDTxnFee in sat(default 1 sat):${NC}"
+echo -n -e "${YELLOW}Input Your RegisterIDTxnFee in sat(default 0 for free ID generating):${NC}"
 read -e IDTXFEE
-if [[ ! ${IDTXFEE} =~ ^[0-9]+$ ]] ; then IDTXFEE=1 ; fi
+REGID=""
+if [[ ! ${IDTXFEE} =~ ^[0-9]+$ ]] ; then IDTXFEE=0
+else 
+   if [ ${IDTXFEE} -gt 0 ]; then
+       REGID='"RegisterIDTxnFee": '$IDTXFEE','
+   fi
+fi
 echo
 if [ -f $FCONFIG ]; then rm $FCONFIG ; fi
 cat << EOF > $FCONFIG
 {
   "BeneficiaryAddr": "$ADDRESS",
-  "RegisterIDTxnFee": $IDTXFEE,
+  $REGID
   "StatePruningMode": "lowmem",
   "SeedList": [
     "http://mainnet-seed-0001.nkn.org:30003",
